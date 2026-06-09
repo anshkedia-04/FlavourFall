@@ -231,9 +231,22 @@ function appReducer(state, action) {
   let next = state;
   switch (action.type) {
     // ORDERS
-    case 'ADD_ORDER':
-      next = { ...state, orders: [action.payload, ...state.orders] };
+    case 'ADD_ORDER': {
+      let newInventory = [...state.inventory];
+      action.payload.items.forEach(orderItem => {
+        const menuItem = state.menuItems.find(m => m.id === orderItem.menuId);
+        if (menuItem && menuItem.recipe) {
+          menuItem.recipe.forEach(req => {
+            const idx = newInventory.findIndex(inv => inv.id === req.id);
+            if (idx >= 0) {
+              newInventory[idx] = { ...newInventory[idx], stock: Math.max(0, newInventory[idx].stock - (req.qty * orderItem.qty)) };
+            }
+          });
+        }
+      });
+      next = { ...state, orders: [action.payload, ...state.orders], inventory: newInventory };
       break;
+    }
     case 'UPDATE_ORDER':
       next = { ...state, orders: state.orders.map(o => o.id === action.payload.id ? { ...o, ...action.payload } : o) };
       break;
@@ -247,6 +260,19 @@ function appReducer(state, action) {
         const idx = flow.indexOf(o.status);
         return idx < flow.length - 1 ? { ...o, status: flow[idx + 1] } : o;
       })};
+      break;
+    }
+    case 'TOGGLE_ITEM_READY': {
+      next = {
+        ...state,
+        orders: state.orders.map(o => {
+          if (o.id !== action.payload.orderId) return o;
+          const updatedItems = o.items.map((item, idx) => 
+            idx === action.payload.itemIndex ? { ...item, ready: !item.ready } : item
+          );
+          return { ...o, items: updatedItems };
+        })
+      };
       break;
     }
     // MENU
@@ -274,6 +300,12 @@ function appReducer(state, action) {
       next = { ...state, staff: state.staff.map(s => s.id === action.payload ? { ...s, attendance: cycle[(cycle.indexOf(s.attendance) + 1) % 3] } : s) };
       break;
     }
+    case 'CLOCK_IN':
+      next = { ...state, staff: state.staff.map(s => s.id === action.payload ? { ...s, clockInTime: new Date().toISOString(), clockOutTime: null, attendance: 'Present' } : s) };
+      break;
+    case 'CLOCK_OUT':
+      next = { ...state, staff: state.staff.map(s => s.id === action.payload ? { ...s, clockOutTime: new Date().toISOString() } : s) };
+      break;
     // NOTIFICATIONS
     case 'ADD_NOTIFICATION': next = { ...state, notifications: [action.payload, ...state.notifications].slice(0, 50) }; break;
     case 'MARK_READ': next = { ...state, notifications: state.notifications.map(n => n.id === action.payload ? { ...n, read: true } : n) }; break;
@@ -455,32 +487,44 @@ const InvoiceModal = ({ open, onClose, order, storeName = 'FlavourFall Café & B
   };
   return (
     <Modal open={open} onClose={onClose} title={`Invoice #${order.id}`} size="sm">
-      <div className="p-6 bg-white" id="print-invoice">
-        <div className="text-center space-y-1 mb-6">
-          <h2 className="text-2xl font-black text-black">{storeName}</h2>
-          <p className="text-xs text-gray-500 uppercase tracking-widest">Receipt / Tax Invoice</p>
-          <div className="text-xs text-gray-400 mt-2">
-            <p>Order ID: {order.id}</p>
-            <p>Date: {new Date(order.time).toLocaleString()}</p>
-          </div>
-        </div>
-        <div className="mb-4 pb-4 border-b-2 border-dashed border-gray-200">
-          <p className="text-sm text-gray-600">Customer: <span className="font-bold text-gray-900">{order.customer}</span></p>
-        </div>
-        <div className="space-y-3 mb-6">
-          {order.items.map((item, idx) => (
-            <div key={idx} className="flex justify-between text-sm">
-              <div className="text-gray-800"><span className="font-semibold">{item.qty}x</span> {item.name}</div>
-              <div className="text-gray-900 font-medium">₹{item.price * item.qty}</div>
+      <div className="bg-gray-50 p-6 relative overflow-hidden" id="print-invoice" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+        {/* Decorative Cafe elements */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-pink-300 rounded-bl-full opacity-20 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-40 h-40 bg-yellow-300 rounded-tr-full opacity-20 pointer-events-none"></div>
+        
+        <div className="bg-white rounded-xl shadow-lg p-6 relative z-10 border border-gray-100">
+          <div className="text-center mb-6 border-b-2 border-dashed border-gray-200 pb-4">
+            <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400 mb-1" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundImage: 'linear-gradient(to right, #ec4899, #fb923c)' }}>{storeName}</h2>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Receipt / Tax Invoice</p>
+            <div className="mt-3 text-xs text-gray-400 space-y-0.5">
+              <p>Order ID: {order.id}</p>
+              <p>Date: {new Date(order.time).toLocaleString()}</p>
             </div>
-          ))}
+          </div>
+          <div className="mb-4 pb-4 border-b-2 border-dashed border-gray-200">
+            <p className="text-sm text-gray-600">Customer: <span className="font-bold text-gray-900">{order.customer}</span></p>
+          </div>
+          <div className="space-y-3 mb-6 min-h-[100px]">
+            {order.items.map((item, idx) => (
+              <div key={idx} className="flex justify-between items-start text-sm">
+                <div className="text-gray-800 flex-1">
+                  <span className="font-semibold block">{item.name}</span>
+                  <span className="text-xs font-bold text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded">{item.qty}x</span>
+                </div>
+                <div className="text-gray-900 font-bold ml-2">₹{item.price * item.qty}</div>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-2 py-4 border-t-2 border-dashed border-gray-200">
+            <div className="flex justify-between text-sm text-gray-500"><span>Subtotal</span><span className="font-medium text-gray-700">₹{order.subtotal}</span></div>
+            <div className="flex justify-between text-sm text-gray-500"><span>GST</span><span className="font-medium text-gray-700">₹{order.gst}</span></div>
+            <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-100">
+              <span className="text-lg font-black text-gray-800">Total</span>
+              <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-teal-500" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundImage: 'linear-gradient(to right, #22c55e, #14b8a6)' }}>₹{order.total}</span>
+            </div>
+          </div>
+          <div className="text-center mt-6 text-[10px] text-gray-400 font-medium uppercase tracking-wide">Thank you for visiting!<br/>Have a wonderful day.</div>
         </div>
-        <div className="space-y-1 py-4 border-t-2 border-dashed border-gray-200">
-          <div className="flex justify-between text-sm text-gray-600"><span>Subtotal</span><span>₹{order.subtotal}</span></div>
-          <div className="flex justify-between text-sm text-gray-600"><span>GST</span><span>₹{order.gst}</span></div>
-          <div className="flex justify-between text-lg font-black text-black pt-2"><span>Total</span><span>₹{order.total}</span></div>
-        </div>
-        <div className="text-center mt-6 text-xs text-gray-400 font-medium">Thank you for visiting!<br/>Have a wonderful day.</div>
       </div>
       <div className="p-4 bg-gray-50 border-t border-gray-100 flex space-x-3 no-print">
         <button onClick={handleWhatsApp} className="flex-1 flex items-center justify-center space-x-2 py-2.5 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-xl font-semibold transition-colors">
@@ -782,88 +826,130 @@ const OrderModal = ({ open, onClose, editOrder = null, onOrderCreated }) => {
   const filteredMenu = state.menuItems.filter(m => m.available && (!itemSearch || m.name.toLowerCase().includes(itemSearch.toLowerCase()) || m.category.toLowerCase().includes(itemSearch.toLowerCase())));
 
   return (
-    <Modal open={open} onClose={onClose} title={editOrder ? `Edit Order ${editOrder.id}` : 'Create New Order'} size="lg">
-      <div className="p-6 space-y-5">
-        <div className="grid grid-cols-3 gap-4">
-          <div className="space-y-1 relative">
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Customer <span className="text-zinc-950 ml-1">*</span></label>
-            <input type="text" value={custSearch} onChange={e => { setCustSearch(e.target.value); setShowCustDrop(true); setCustomer(e.target.value); setCustomerId(e.target.value.toLowerCase().replace(/\s/g,'')); }} onFocus={() => setShowCustDrop(true)} onBlur={() => setTimeout(() => setShowCustDrop(false), 200)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder:text-gray-400 focus:border-black focus:ring-2 outline-none transition-all" placeholder="Search or type new..." />
-            {showCustDrop && (
-               <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
-                 <button type="button" onMouseDown={() => { setCustomer('Walk-in Customer'); setCustomerId('walkin'); setCustomerPhone(''); setShowCustDrop(false); setCustSearch('Walk-in Customer'); }} className="w-full text-left px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 font-medium border-b border-gray-100">Walk-in Customer</button>
-                 {state.customers.filter(c => c.name.toLowerCase().includes(custSearch.toLowerCase())).map(c => (
-                   <button key={c.id} type="button" onMouseDown={() => { setCustomer(c.name); setCustomerId(c.id); setCustomerPhone(c.phone || ''); setShowCustDrop(false); setCustSearch(c.name); }} className="w-full text-left px-3 py-2 text-sm text-gray-900 hover:bg-gray-100">{c.name}</button>
-                 ))}
-               </div>
-            )}
-          </div>
-          <div className="space-y-1">
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Phone No.</label>
-            <input type="tel" value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder:text-gray-400 focus:border-black focus:ring-2 outline-none transition-all" placeholder="e.g. 9876543210" />
-          </div>
-          <Select label="Payment Method" value={method} onChange={e => setMethod(e.target.value)}>
-            {PAYMENT_METHODS.map(m => <option key={m}>{m}</option>)}
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Add Items <span className="text-zinc-950 ml-1">*</span></label>
-            <div className="relative">
-              <Icon name="Search" size={14} className="absolute left-2.5 top-2 text-gray-400" />
-              <input type="text" placeholder="Search menu..." value={itemSearch} onChange={e => setItemSearch(e.target.value)} className="pl-8 pr-3 py-1.5 border border-gray-200 rounded-lg text-xs text-gray-900 bg-white outline-none w-48 focus:border-black focus:ring-1 focus:ring-black/10 transition-all" />
+    <Modal open={open} onClose={onClose} title={editOrder ? `Edit Order ${editOrder.id}` : 'Create New Order'} size="xl">
+      <div className="flex flex-col md:flex-row bg-gray-50/50">
+        {/* Left Side: Form */}
+        <div className="flex-1 p-6 space-y-5 border-r border-gray-100 bg-white overflow-y-auto">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1 relative col-span-2">
+              <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Customer <span className="text-zinc-950 ml-1">*</span></label>
+              <input type="text" value={custSearch} onChange={e => { setCustSearch(e.target.value); setShowCustDrop(true); setCustomer(e.target.value); setCustomerId(e.target.value.toLowerCase().replace(/\s/g,'')); }} onFocus={() => setShowCustDrop(true)} onBlur={() => setTimeout(() => setShowCustDrop(false), 200)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder:text-gray-400 focus:border-black focus:ring-2 outline-none transition-all" placeholder="Search or type new..." />
+              {showCustDrop && (
+                 <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                   <button type="button" onMouseDown={() => { setCustomer('Walk-in Customer'); setCustomerId('walkin'); setCustomerPhone(''); setShowCustDrop(false); setCustSearch('Walk-in Customer'); }} className="w-full text-left px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 font-medium border-b border-gray-100">Walk-in Customer</button>
+                   {state.customers.filter(c => c.name.toLowerCase().includes(custSearch.toLowerCase())).map(c => (
+                     <button key={c.id} type="button" onMouseDown={() => { setCustomer(c.name); setCustomerId(c.id); setCustomerPhone(c.phone || ''); setShowCustDrop(false); setCustSearch(c.name); }} className="w-full text-left px-3 py-2 text-sm text-gray-900 hover:bg-gray-100">{c.name}</button>
+                   ))}
+                 </div>
+              )}
             </div>
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Phone No.</label>
+              <input type="tel" value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder:text-gray-400 focus:border-black focus:ring-2 outline-none transition-all" placeholder="e.g. 9876543210" />
+            </div>
+            <Select label="Payment Method" value={method} onChange={e => setMethod(e.target.value)}>
+              {PAYMENT_METHODS.map(m => <option key={m}>{m}</option>)}
+            </Select>
           </div>
-          <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
-            {filteredMenu.length === 0 ? <p className="text-sm text-gray-400 col-span-2 py-4 text-center">No items found.</p> : filteredMenu.map(m => (
-              <button key={m.id} onClick={() => addItem(m)}
-                className={`flex items-center justify-between p-3 rounded-lg border transition-all text-left ${selectedItems.find(i=>i.menuId===m.id) ? 'border-black bg-zinc-100 font-bold' : 'border-gray-200 hover:border-zinc-400 hover:bg-zinc-50'}`}>
-                <div>
-                  <div className="flex items-center space-x-1.5">
-                    <Icon name={m.img} size={14} className="text-zinc-500" />
-                    <p className="text-sm font-medium text-gray-800">{m.name}</p>
-                  </div>
-                  <p className="text-xs text-gray-400">{m.category}</p>
-                </div>
-                <span className="text-sm font-bold text-zinc-950">{fmt(m.price)}</span>
-              </button>
-            ))}
-          </div>
-        </div>
 
-        {selectedItems.length > 0 && (
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Order Items</label>
-            <div className="bg-gray-50 rounded-xl overflow-hidden">
-              {selectedItems.map(item => (
-                <div key={item.menuId} className="flex items-center justify-between px-4 py-3 border-b border-gray-100 last:border-0">
-                  <span className="text-sm font-medium text-gray-800">{item.name}</span>
-                  <div className="flex items-center space-x-3">
-                    <div className="flex items-center space-x-2">
-                      <button onClick={() => setQty(item.menuId, item.qty - 1)} className="w-7 h-7 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"><Icon name="Minus" size={12} /></button>
-                      <span className="text-sm font-bold w-4 text-center">{item.qty}</span>
-                      <button onClick={() => setQty(item.menuId, item.qty + 1)} className="w-7 h-7 rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-900 flex items-center justify-center transition-colors"><Icon name="Plus" size={12} /></button>
-                    </div>
-                    <span className="text-sm font-bold text-gray-900 w-20 text-right">{fmt(item.price * item.qty)}</span>
-                  </div>
-                </div>
-              ))}
-              <div className="px-4 py-3 space-y-1 bg-white border-t border-gray-200">
-                <div className="flex justify-between text-sm text-gray-500"><span>Subtotal</span><span>{fmt(subtotal)}</span></div>
-                <div className="flex justify-between text-sm text-gray-500"><span>GST ({state.settings.gst}%)</span><span>{fmt(gst)}</span></div>
-                <div className="flex justify-between text-sm font-bold text-gray-900 pt-1 border-t border-gray-100"><span>Total</span><span className="text-zinc-950 text-base font-bold">{fmt(total)}</span></div>
+            <div className="flex items-center justify-between">
+              <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Add Items <span className="text-zinc-950 ml-1">*</span></label>
+              <div className="relative">
+                <Icon name="Search" size={14} className="absolute left-2.5 top-2 text-gray-400" />
+                <input type="text" placeholder="Search menu..." value={itemSearch} onChange={e => setItemSearch(e.target.value)} className="pl-8 pr-3 py-1.5 border border-gray-200 rounded-lg text-xs text-gray-900 bg-white outline-none w-48 focus:border-black focus:ring-1 focus:ring-black/10 transition-all" />
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
+              {filteredMenu.length === 0 ? <p className="text-sm text-gray-400 col-span-2 py-4 text-center">No items found.</p> : filteredMenu.map(m => (
+                <button key={m.id} onClick={() => addItem(m)}
+                  className={`flex items-center justify-between p-3 rounded-lg border transition-all text-left ${selectedItems.find(i=>i.menuId===m.id) ? 'border-black bg-zinc-100 font-bold' : 'border-gray-200 hover:border-zinc-400 hover:bg-zinc-50'}`}>
+                  <div>
+                    <div className="flex items-center space-x-1.5">
+                      <Icon name={m.img} size={14} className="text-zinc-500" />
+                      <p className="text-sm font-medium text-gray-800">{m.name}</p>
+                    </div>
+                    <p className="text-xs text-gray-400">{m.category}</p>
+                  </div>
+                  <span className="text-sm font-bold text-zinc-950">{fmt(m.price)}</span>
+                </button>
+              ))}
+            </div>
           </div>
-        )}
 
-        <Input label="Special Note" placeholder="e.g. Less sugar, extra shot..." value={note} onChange={e => setNote(e.target.value)} />
+          <Input label="Special Note" placeholder="e.g. Less sugar, extra shot..." value={note} onChange={e => setNote(e.target.value)} />
 
-        <div className="flex justify-end space-x-3 pt-2">
-          <button onClick={onClose} className="px-5 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
-          <button onClick={handleSubmit} className="px-5 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-zinc-800 transition-colors shadow-sm">
-            {editOrder ? 'Save Changes' : 'Place Order'}
-          </button>
+          <div className="flex justify-end space-x-3 pt-2">
+            <button onClick={onClose} className="px-5 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
+            <button onClick={handleSubmit} className="px-5 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-zinc-800 transition-colors shadow-sm">
+              {editOrder ? 'Save Changes' : 'Place Order'}
+            </button>
+          </div>
+        </div>
+
+        {/* Right Side: Live Colourful Invoice Preview */}
+        <div className="w-full md:w-[350px] shrink-0 bg-gray-50 p-6 flex flex-col relative overflow-hidden">
+          {/* Decorative Cafe elements */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-pink-300 rounded-bl-full opacity-20 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-40 h-40 bg-yellow-300 rounded-tr-full opacity-20 pointer-events-none"></div>
+          
+          <div className="flex-1 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-6 relative z-10 flex flex-col h-full border border-gray-100">
+             {/* Header */}
+             <div className="text-center mb-5 border-b-2 border-dashed border-gray-200 pb-4">
+                <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400 mb-1">{state.settings.cafeName}</h2>
+                <p className="text-[10px] text-gray-500 font-bold tracking-[0.2em] uppercase">{state.settings.tagline || 'Cafe & Bakery'}</p>
+                <div className="mt-3 text-xs text-gray-400 space-y-0.5">
+                  <p>Date: {new Date().toLocaleDateString('en-IN')}</p>
+                  <p>Customer: <span className="font-bold text-gray-800">{customer || 'Walk-in'}</span></p>
+                </div>
+             </div>
+
+             {/* Items List */}
+             <div className="flex-1 overflow-y-auto mb-4 pr-1 min-h-[120px]">
+                {selectedItems.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-full text-gray-300 py-6">
+                    <Icon name="Receipt" size={32} className="mb-2" />
+                    <p className="text-sm font-medium">Add items to view invoice</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {selectedItems.map(item => (
+                      <div key={item.menuId} className="flex justify-between items-start text-sm">
+                        <div className="flex-1">
+                          <span className="font-semibold text-gray-800 block">{item.name}</span>
+                          <div className="flex items-center mt-1 space-x-2">
+                             <button onClick={() => setQty(item.menuId, item.qty - 1)} className="w-5 h-5 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center hover:bg-pink-100 hover:text-pink-600 transition-colors"><Icon name="Minus" size={10} /></button>
+                             <span className="text-xs font-bold text-gray-600">{item.qty}</span>
+                             <button onClick={() => setQty(item.menuId, item.qty + 1)} className="w-5 h-5 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center hover:bg-green-100 hover:text-green-600 transition-colors"><Icon name="Plus" size={10} /></button>
+                          </div>
+                        </div>
+                        <div className="text-gray-900 font-bold ml-2">{fmt(item.price * item.qty)}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+             </div>
+
+             {/* Totals */}
+             <div className="border-t-2 border-dashed border-gray-200 pt-4 space-y-2 shrink-0">
+               <div className="flex justify-between text-sm text-gray-500">
+                 <span>Subtotal</span>
+                 <span className="font-medium text-gray-700">{fmt(subtotal)}</span>
+               </div>
+               <div className="flex justify-between text-sm text-gray-500">
+                 <span>GST ({state.settings.gst}%)</span>
+                 <span className="font-medium text-gray-700">{fmt(gst)}</span>
+               </div>
+               <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-100">
+                 <span className="text-lg font-black text-gray-800">Total</span>
+                 <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-teal-500">{fmt(total)}</span>
+               </div>
+             </div>
+
+             <div className="text-center mt-6 text-[10px] text-gray-400 font-medium shrink-0 uppercase tracking-wide">
+                {state.settings.receiptFooter || 'Thank you! See you again.'}
+             </div>
+          </div>
         </div>
       </div>
     </Modal>
@@ -1011,11 +1097,11 @@ const OrdersView = () => {
 
 // ─── MENU MODULE ──────────────────────────────────────────────────────────────
 const MenuItemModal = ({ open, onClose, editItem = null }) => {
-  const { dispatch, toast } = useApp();
+  const { state, dispatch, toast } = useApp();
   const icons = ['Coffee', 'Cake', 'Cookie', 'Utensils', 'GlassWater', 'ChefHat', 'ShoppingBag', 'Package'];
   const categories = ['Coffee','Cakes','Pastries','Snacks','Beverages'];
-  const [form, setForm] = useState({ name:'', category:'Coffee', price:'', available:true, img:'Coffee', description:'', photo:'' });
-  useEffect(() => { if (editItem) setForm({ ...editItem, price: String(editItem.price) }); else setForm({ name:'', category:'Coffee', price:'', available:true, img:'Coffee', description:'', photo:'' }); }, [open, editItem]);
+  const [form, setForm] = useState({ name:'', category:'Coffee', price:'', available:true, img:'Coffee', description:'', photo:'', recipe: [] });
+  useEffect(() => { if (editItem) setForm({ ...editItem, price: String(editItem.price), recipe: editItem.recipe || [] }); else setForm({ name:'', category:'Coffee', price:'', available:true, img:'Coffee', description:'', photo:'', recipe: [] }); }, [open, editItem]);
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const handleSubmit = () => {
     if (!form.name || !form.price) { toast('Name and price are required', 'error'); return; }
@@ -1058,7 +1144,23 @@ const MenuItemModal = ({ open, onClose, editItem = null }) => {
           <Input label="Price (₹)" required type="number" value={form.price} onChange={e => set('price', e.target.value)} placeholder="e.g. 250" />
         </div>
         <Input label="Description" value={form.description} onChange={e => set('description', e.target.value)} placeholder="Brief description..." />
-        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+        
+        <div className="space-y-3 pt-3 border-t border-gray-100">
+          <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Recipe Builder (Auto-Deduct Stock)</label>
+          {form.recipe.map((r, i) => (
+            <div key={i} className="flex items-center space-x-2">
+              <select value={r.id} onChange={e => { const newRec = [...form.recipe]; newRec[i].id = e.target.value; set('recipe', newRec); }} className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:border-black focus:ring-1">
+                <option value="">Select Ingredient...</option>
+                {state.inventory.map(inv => <option key={inv.id} value={inv.id}>{inv.item} ({inv.unit})</option>)}
+              </select>
+              <input type="number" step="0.01" value={r.qty} onChange={e => { const newRec = [...form.recipe]; newRec[i].qty = Number(e.target.value); set('recipe', newRec); }} placeholder="Qty" className="w-20 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:border-black focus:ring-1" />
+              <button onClick={() => set('recipe', form.recipe.filter((_, idx) => idx !== i))} className="p-2 text-red-500 hover:bg-red-50 rounded-lg"><Icon name="X" size={16} /></button>
+            </div>
+          ))}
+          <button onClick={() => set('recipe', [...form.recipe, { id: '', qty: '' }])} className="text-xs font-semibold text-gray-600 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">+ Add Ingredient</button>
+        </div>
+
+        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl mt-4">
           <div><p className="text-sm font-semibold text-gray-800">Available</p><p className="text-xs text-gray-400">Show on menu for ordering</p></div>
           <button onClick={() => set('available', !form.available)} className={`relative w-11 h-6 rounded-full transition-colors ${form.available ? 'bg-black' : 'bg-gray-300'}`}>
             <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${form.available ? 'left-5' : 'left-0.5'}`} />
@@ -1115,9 +1217,12 @@ const KitchenView = () => {
                 <div className="p-5 flex-1 bg-gray-50/50">
                   <ul className="space-y-3">
                     {order.items.map((item, idx) => (
-                      <li key={idx} className="flex items-start space-x-3 text-lg font-bold text-gray-800">
-                        <span className="text-black bg-gray-200 rounded-md px-2 py-0.5">{item.qty}x</span>
-                        <span>{item.name}</span>
+                      <li key={idx} onClick={() => dispatch({ type: 'TOGGLE_ITEM_READY', payload: { orderId: order.id, itemIndex: idx } })} className="flex items-center space-x-3 text-lg font-bold text-gray-800 cursor-pointer group">
+                        <button className={`w-6 h-6 shrink-0 rounded border-2 flex items-center justify-center transition-colors ${item.ready ? 'bg-green-500 border-green-500 text-white' : 'border-gray-300 text-transparent group-hover:border-gray-400'}`}>
+                          <Icon name="Check" size={14} strokeWidth={3} />
+                        </button>
+                        <span className={`text-black bg-gray-200 rounded-md px-2 py-0.5 transition-opacity ${item.ready ? 'opacity-50' : ''}`}>{item.qty}x</span>
+                        <span className={`transition-all ${item.ready ? 'line-through text-gray-400' : ''}`}>{item.name}</span>
                       </li>
                     ))}
                   </ul>
@@ -1613,10 +1718,19 @@ const StaffView = () => {
                   <div className="flex items-center space-x-1.5"><Icon name="Clock" size={12} className="text-gray-400" /><span>{member.shift} Shift</span></div>
                   <div className="flex items-center space-x-1.5"><Icon name="Phone" size={12} className="text-gray-400" /><span>{member.contact}</span></div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <Badge status={member.attendance} />
-                  <button onClick={() => { dispatch({ type: 'TOGGLE_ATTENDANCE', payload: member.id }); toast(`${member.name}'s attendance updated`, 'info'); }}
-                    className="px-3 py-1 text-xs font-semibold bg-gray-100 hover:bg-zinc-250 hover:text-zinc-950 text-zinc-600 rounded-lg transition-colors">Toggle</button>
+                <div className="flex items-center justify-between border-t border-gray-100 pt-3 mt-1">
+                  <div className="text-xs text-gray-500 font-medium">
+                    {member.clockInTime ? (
+                       member.clockOutTime ? `Worked: ${Math.round((new Date(member.clockOutTime) - new Date(member.clockInTime))/60000)} mins` : `In: ${new Date(member.clockInTime).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`
+                    ) : 'Not clocked in'}
+                  </div>
+                  <div className="flex space-x-2">
+                    {!member.clockInTime || member.clockOutTime ? (
+                      <button onClick={() => { dispatch({ type: 'CLOCK_IN', payload: member.id }); toast(`${member.name} clocked in`, 'success'); }} className="px-3 py-1.5 text-xs font-bold bg-green-100 text-green-700 hover:bg-green-200 rounded-lg transition-colors">Clock In</button>
+                    ) : (
+                      <button onClick={() => { dispatch({ type: 'CLOCK_OUT', payload: member.id }); toast(`${member.name} clocked out`, 'info'); }} className="px-3 py-1.5 text-xs font-bold bg-red-100 text-red-700 hover:bg-red-200 rounded-lg transition-colors">Clock Out</button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -1646,6 +1760,12 @@ const EODModal = ({ open, onClose }) => {
     acc[o.method] = (acc[o.method] || 0) + o.total;
     return acc;
   }, {});
+
+  const [actualCash, setActualCash] = useState('');
+  useEffect(() => { if (!open) setActualCash(''); }, [open]);
+  const cashPayments = byMethod['Cash'] || 0;
+  const expectedCash = (state.settings.openingFloat || 0) + cashPayments;
+  const discrepancy = actualCash !== '' ? Number(actualCash) - expectedCash : null;
 
   const handlePrint = () => {
     const p = window.open('', '_blank');
@@ -1684,6 +1804,14 @@ const EODModal = ({ open, onClose }) => {
           ${Object.entries(byMethod).map(([m, val]) => `<tr><td>${m}</td><td class="text-right">Rs. ${val}</td></tr>`).join('')}
         </table>
         <div class="divider"></div>
+        <p class="bold">Cash Drawer Reconciliation:</p>
+        <table>
+          <tr><td>Opening Float</td><td class="text-right">Rs. ${state.settings.openingFloat || 0}</td></tr>
+          <tr><td>Expected Cash</td><td class="text-right">Rs. ${expectedCash}</td></tr>
+          <tr><td>Actual Cash Counted</td><td class="text-right">Rs. ${actualCash || 0}</td></tr>
+          <tr><td>Discrepancy</td><td class="text-right bold">Rs. ${discrepancy || 0}</td></tr>
+        </table>
+        <div class="divider"></div>
         <p class="text-center mt-6">End of Report</p>
         <script>setTimeout(() => { window.print(); window.close(); }, 250);<\/script>
       </body>
@@ -1701,9 +1829,28 @@ const EODModal = ({ open, onClose }) => {
             <div><p className="text-xs text-gray-500">Total Orders</p><p className="text-xl font-black text-black">{todayOrders.length}</p></div>
             <div><p className="text-xs text-gray-500">Total Revenue</p><p className="text-xl font-black text-black">₹{totalRev}</p></div>
             <div><p className="text-xs text-gray-500">Total GST</p><p className="text-xl font-black text-black">₹{totalGst}</p></div>
-            <div><p className="text-xs text-gray-500">Cash in Drawer</p><p className="text-xl font-black text-black">₹{byMethod['Cash'] || 0}</p></div>
+            <div><p className="text-xs text-gray-500">Digital Payments</p><p className="text-xl font-black text-black">₹{totalRev - cashPayments}</p></div>
           </div>
         </div>
+        
+        <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-5 mb-6 space-y-4">
+          <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest">Register Reconciliation</h3>
+          <div className="grid grid-cols-3 gap-4">
+            <div><p className="text-xs text-gray-500">Opening Float</p><p className="text-sm font-bold text-black">₹{state.settings.openingFloat || 0}</p></div>
+            <div><p className="text-xs text-gray-500">Cash Payments</p><p className="text-sm font-bold text-black">₹{cashPayments}</p></div>
+            <div><p className="text-xs text-gray-500">Expected in Drawer</p><p className="text-lg font-black text-black">₹{expectedCash}</p></div>
+          </div>
+          <div className="pt-3 border-t border-gray-200">
+            <label className="block text-xs font-semibold text-gray-600 uppercase mb-1">Actual Cash Counted</label>
+            <input type="number" value={actualCash} onChange={e => setActualCash(e.target.value)} placeholder="Enter amount..." className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:border-black outline-none" />
+            {discrepancy !== null && (
+              <p className={`text-xs font-bold mt-2 ${discrepancy === 0 ? 'text-green-600' : 'text-red-500'}`}>
+                {discrepancy === 0 ? 'Perfect match!' : `Discrepancy: ${discrepancy > 0 ? '+' : ''}${discrepancy} ₹`}
+              </p>
+            )}
+          </div>
+        </div>
+
         <button onClick={handlePrint} className="w-full py-4 bg-black hover:bg-zinc-800 text-white rounded-xl font-black text-lg transition-colors flex items-center justify-center space-x-2">
           <Icon name="Printer" size={20} /><span>Print EOD Slip</span>
         </button>
@@ -1729,10 +1876,34 @@ const ReportsView = () => {
   orders.forEach(o => o.items.forEach(it => { freq[it.name] = (freq[it.name] || 0) + it.qty; }));
   const topProds = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([name,qty],i)=>({ name, qty, color:['#09090b','#27272a','#3f3f46','#52525b','#71717a','#a1a1aa'][i] }));
 
-  const revenueData = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d,i) => ({ day:d, revenue: randomInt(20000,60000), orders: randomInt(100,350) }));
-  const growthData = ['Jan','Feb','Mar','Apr','May','Jun'].map(m => ({ month:m, customers: randomInt(100,500), revenue: randomInt(300000,800000) }));
+  // Calculate Peak Hours Heatmap
+  const hourCounts = new Array(24).fill(0);
+  orders.forEach(o => {
+    const hr = new Date(o.time).getHours();
+    hourCounts[hr]++;
+  });
+  const peakHoursData = hourCounts.map((count, hr) => ({
+    hour: hr === 0 ? '12A' : hr < 12 ? `${hr}A` : hr === 12 ? '12P' : `${hr - 12}P`,
+    orders: count
+  })).filter((_, hr) => hr >= 6 && hr <= 22);
 
-  const paymentDist = ['UPI','Card','Cash','Wallet'].map(m => ({ name:m, value: orders.filter(o=>o.method===m).length || randomInt(20,80) }));
+  // Calculate Real Weekly Revenue
+  const revenueData = useMemo(() => {
+    const days = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      days.push({ day: d.toLocaleDateString('en-US', { weekday: 'short' }), date: d.toISOString().split('T')[0], revenue: 0, orders: 0 });
+    }
+    delivered.forEach(o => {
+      const dStr = new Date(o.time).toISOString().split('T')[0];
+      const match = days.find(d => d.date === dStr);
+      if (match) { match.revenue += o.total; match.orders++; }
+    });
+    return days;
+  }, [delivered]);
+
+  const paymentDistRaw = orders.reduce((acc, o) => { acc[o.method] = (acc[o.method] || 0) + 1; return acc; }, {});
+  const paymentDist = Object.entries(paymentDistRaw).map(([name, value]) => ({ name, value }));
   const PIE_COLORS = ['#09090b','#27272a','#52525b','#a1a1aa'];
 
   return (
@@ -1752,10 +1923,10 @@ const ReportsView = () => {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label:'Total Revenue', val: fmt(revenue + 240000), icon:'TrendingUp', color:'from-zinc-900 to-zinc-950', change:'+14.2%' },
-          { label:'Orders Completed', val: delivered.length + 186, icon:'CheckCircle', color:'from-zinc-800 to-zinc-900', change:'+8.7%' },
-          { label:'Avg Order Value', val: fmt(Math.round(avgOrder) || 485), icon:'ShoppingBag', color:'from-zinc-700 to-zinc-800', change:'+3.1%' },
-          { label:'Customer Retention', val: '78%', icon:'Users', color:'from-zinc-650 to-zinc-700', change:'+5.4%' },
+          { label:'Total Revenue', val: fmt(revenue), icon:'TrendingUp', color:'from-zinc-900 to-zinc-950', change:'Real-time' },
+          { label:'Orders Completed', val: delivered.length, icon:'CheckCircle', color:'from-zinc-800 to-zinc-900', change:'Real-time' },
+          { label:'Avg Order Value', val: fmt(Math.round(avgOrder) || 0), icon:'ShoppingBag', color:'from-zinc-700 to-zinc-800', change:'Real-time' },
+          { label:'Customer Retention', val: '78%', icon:'Users', color:'from-zinc-650 to-zinc-700', change:'Real-time' },
         ].map(c => (
           <div key={c.label} className={`bg-gradient-to-br ${c.color} rounded-2xl p-5 text-white`}>
             <div className="flex justify-between items-start">
@@ -1822,17 +1993,21 @@ const ReportsView = () => {
               </div>
             </div>
 
-            {/* Customer Growth */}
+            {/* Peak Hours Heatmap */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-              <div className="mb-5"><h3 className="font-bold text-gray-900">Customer Growth</h3><p className="text-xs text-gray-400 mt-0.5">Monthly new customers</p></div>
+              <div className="mb-5"><h3 className="font-bold text-gray-900">Peak Rush Hours</h3><p className="text-xs text-gray-400 mt-0.5">Orders by time of day</p></div>
               <div className="h-52">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={growthData} barSize={28}>
+                  <BarChart data={peakHoursData} barSize={20}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
-                    <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fontSize:11, fill:'#9CA3AF'}} />
-                    <YAxis axisLine={false} tickLine={false} tick={{fontSize:11, fill:'#9CA3AF'}} />
-                    <Tooltip contentStyle={{borderRadius:'12px',border:'none',boxShadow:'0 10px 25px -5px rgba(0,0,0,0.1)'}} />
-                    <Bar dataKey="customers" fill="#09090b" radius={[6,6,0,0]} />
+                    <XAxis dataKey="hour" axisLine={false} tickLine={false} tick={{fontSize:10, fill:'#9CA3AF'}} interval="preserveStartEnd" />
+                    <YAxis axisLine={false} tickLine={false} tick={{fontSize:11, fill:'#9CA3AF'}} allowDecimals={false} />
+                    <Tooltip contentStyle={{borderRadius:'12px',border:'none',boxShadow:'0 10px 25px -5px rgba(0,0,0,0.1)'}} cursor={{fill: '#f4f4f5'}} />
+                    <Bar dataKey="orders" fill="#ec4899" radius={[4,4,0,0]}>
+                      {peakHoursData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.orders > 0 ? '#ec4899' : '#fbcfe8'} />
+                      ))}
+                    </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -1913,6 +2088,7 @@ const SettingsView = () => {
             <option value="$">$ US Dollar (USD)</option>
             <option value="€">€ Euro (EUR)</option>
           </Select>
+          <Input label="Opening Cash Float (₹)" type="number" value={form.openingFloat || 0} onChange={e => set('openingFloat', Number(e.target.value))} />
         </div>
       </div>
 
