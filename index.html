@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FlavourFall — Café & Bakery Management System</title>
-  <meta name="description" content="FlavourFall is a modern all-in-one café and bakery management system. Manage orders, menu, inventory, staff, customers and reports from one beautiful dashboard.">
+  <title>ToastMaster — Café & Bakery Management System</title>
+  <meta name="description" content="ToastMaster is a modern all-in-one café and bakery management system. Manage orders, menu, inventory, staff, customers and reports from one beautiful dashboard.">
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -194,11 +194,11 @@ const SEED_NOTIFICATIONS = [
 ];
 
 const SEED_SETTINGS = {
-  cafeName: 'FlavourFall',
+  cafeName: 'ToastMaster',
   tagline: 'Café & Bakery',
   gst: 18,
   currency: '₹',
-  receiptFooter: 'Thank you for visiting FlavourFall! Come back soon.',
+  receiptFooter: 'Thank you for visiting ToastMaster! Come back soon.',
   adminName: 'Arjun Kapoor',
   theme: 'light',
   notifyNewOrder: true,
@@ -424,7 +424,7 @@ const Modal = ({ open, onClose, title, children, size = 'md' }) => {
   );
 };
 
-const InvoiceModal = ({ open, onClose, order, storeName = 'FlavourFall Café & Bakery' }) => {
+const InvoiceModal = ({ open, onClose, order, storeName = 'ToastMaster Café & Bakery' }) => {
   if (!open || !order) return null;
   const handlePrint = () => {
     const p = window.open('', '_blank');
@@ -1498,7 +1498,7 @@ const CustomerModal = ({ open, onClose, editCustomer = null }) => {
     else {
       const c = { ...form, id: 'c' + Date.now(), visits: 0, spend: 0, points: 0, tier: 'Bronze', joinDate: new Date().toISOString().slice(0,10) };
       dispatch({ type: 'ADD_CUSTOMER', payload: c });
-      if (true) notify('customer', 'New Customer Registered', `${form.name} joined FlavourFall`);
+      if (true) notify('customer', 'New Customer Registered', `${form.name} joined ToastMaster`);
       toast(`Welcome ${form.name}!`, 'success');
     }
     onClose();
@@ -1786,7 +1786,7 @@ const EODModal = ({ open, onClose }) => {
         </style>
       </head>
       <body>
-        <h2>${state.settings.cafeName || 'FlavourFall'}</h2>
+        <h2>${state.settings.cafeName || 'ToastMaster'}</h2>
         <p class="text-center bold">END OF DAY SHIFT REPORT</p>
         <div class="divider"></div>
         <p>Date: ${new Date().toLocaleDateString()}</p>
@@ -2155,7 +2155,7 @@ const DemoView = () => {
           <Icon name="Sparkles" size={12} /><span>CLIENT DEMO MODE</span>
         </div>
         <h1 className="text-2xl font-black text-gray-900">Demo Controls</h1>
-        <p className="text-gray-400 text-sm mt-1">Generate realistic data to showcase the full capabilities of FlavourFall to clients</p>
+        <p className="text-gray-400 text-sm mt-1">Generate realistic data to showcase the full capabilities of ToastMaster to clients</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -2476,20 +2476,23 @@ const Header = ({ activeTab, onNavigate, sidebarCollapsed, onToggleSidebar }) =>
   };
 
   return (
-    <header className="h-16 bg-white border-b border-gray-100 px-5 flex items-center justify-between z-10 shrink-0">
+    <header className="h-16 bg-white border-b border-gray-100 px-5 flex items-center justify-between z-10 shrink-0 relative">
       <div className="flex items-center space-x-3">
         <button onClick={onToggleSidebar} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors">
           <Icon name="Menu" size={20} />
         </button>
         <div className="hidden sm:flex items-center space-x-2 text-sm text-gray-500">
-          <span className="text-gray-400">FlavourFall</span>
-          <Icon name="ChevronRight" size={14} className="text-gray-300" />
           <span className="font-semibold text-gray-900">{tabTitles[activeTab]}</span>
         </div>
       </div>
 
+      {/* Centered App Name */}
+      <div className="absolute inset-x-0 flex justify-center items-center h-full pointer-events-none">
+        <span className="text-xl font-black text-black tracking-wider uppercase">ToastMaster</span>
+      </div>
+
       <div className="flex items-center space-x-3">
-        <div className="hidden md:block">
+        <div className="hidden md:block relative z-10">
           <GlobalSearch onNavigate={onNavigate} />
         </div>
 
@@ -2576,8 +2579,8 @@ try {
   const root = ReactDOM.createRoot(container);
   root.render(<App />);
 } catch (err) {
-  console.error('FlavourFall render error:', err);
-  document.body.innerHTML = `<div style="font-family:sans-serif;padding:40px;text-align:center;color:#DC2626"><h2>Failed to load FlavourFall</h2><pre style="background:#FEF2F2;padding:12px;border-radius:8px;text-align:left;font-size:12px">${err?.stack || err}</pre></div>`;
+  console.error('ToastMaster render error:', err);
+  document.body.innerHTML = `<div style="font-family:sans-serif;padding:40px;text-align:center;color:#DC2626"><h2>Failed to load ToastMaster</h2><pre style="background:#FEF2F2;padding:12px;border-radius:8px;text-align:left;font-size:12px">${err?.stack || err}</pre></div>`;
 }
 </script>
 </body>
