@@ -1,0 +1,291 @@
+TOASTMASTER
+Enterprise Edition — Feature Upgrade Report
+Prepared for: FlavourFall Restaurant Group
+Confidential — Strategic Proposal
+June 2026
+Why FlavourFall should switch from Petpooja to ToastMaster
+Executive Summary
+FlavourFall operates 6 restaurants with a hierarchical team structure (Owner → Manager → Captain → Waiter / Barista / Chef) and currently runs Petpooja as its POS platform. While Petpooja is a capable commodity POS trusted by 1,00,000+ outlets, it is fundamentally a billing-first tool with multi-outlet support bolted on as add-ons.
+ToastMaster, already a rich single-outlet café & bakery management system, has a significant head start in UX quality, recipe-linked inventory, and staff management. With targeted enterprise additions outlined in this report, ToastMaster can deliver:
+A purpose-built multi-outlet command centre vs Petpooja's franchise module
+Role-based access for every level of FlavourFall's hierarchy
+True table & floor management that Petpooja lacks natively
+Aggregator integration (Swiggy / Zomato) in a single screen
+An offline-capable PWA vs Petpooja's dependency on connectivity
+White-label branding for FlavourFall — not a generic SaaS logo
+This report identifies 22 key feature additions across 8 modules, maps each gap directly against Petpooja's capabilities, and provides a prioritised development roadmap.
+Section 1 — Petpooja Feature Analysis
+Based on public feature documentation and user reviews, below is a direct feature-by-feature comparison of Petpooja vs ToastMaster (current state):
+1.1 Core Capabilities Comparison
+Feature
+Petpooja
+ToastMaster (Proposed)
+Multi-outlet Central Dashboard
+✅ Head-office module
+❌ Not yet built
+Table / Floor Map Management
+✅ Table & area-wise orders
+❌ Not yet built
+KOT (Kitchen Order Ticket) Printing
+✅ Separate KOT per station
+❌ Partial – KDS only
+Captain App (Mobile Ordering)
+✅ Captain App add-on
+❌ Not yet built
+Waiter Calling Device Integration
+✅ Smart calling devices
+❌ Not yet built
+Split Bill / Merge Tables
+✅ Native
+❌ Not yet built
+Online Order Aggregator Integration
+✅ Swiggy, Zomato, 200+ partners
+❌ Not yet built
+Delivery Dispatch Module
+✅ Delivery dispatch device
+❌ Not yet built
+Role-Based Access Control
+✅ Outlet-wise staff rights
+⚡ Basic roles only
+Franchise / Chain Reporting
+✅ Zone & city grouping
+❌ Not yet built
+Central Kitchen / Commissary
+✅ Central kitchen module
+❌ Not yet built
+GST / e-Way Bill Filing
+✅ Auto GST portal upload
+⚡ GST % only
+Customer Feedback & Rating
+✅ Feedback app in marketplace
+❌ Not yet built
+Scan & Order (QR Code)
+✅ QR dine-in ordering
+❌ Not yet built
+Self-Service Kiosk Mode
+✅ Kiosk add-on
+❌ Not yet built
+Token / Queue Management
+✅ Token management
+❌ Not yet built
+Tally / Accounting Integration
+✅ 200+ integrations
+❌ Not yet built
+Offline Mode
+⚡ Limited
+❌ Not yet built
+Advanced Analytics (80+ reports)
+✅ 80+ downloadable reports
+⚡ Basic charts only
+Loyalty Wallet / Points
+✅ Loyalty wallet
+⚡ Points only
+SMS / WhatsApp Marketing
+✅ CRM campaigns
+⚡ WhatsApp receipt only
+Purchase Orders to Suppliers
+✅ PO management
+❌ Not yet built
+1.2 Where Petpooja Falls Short (ToastMaster's Opportunity)
+Petpooja's interface is functional but dated — reviewed as 'cluttered' by users. ToastMaster's glassmorphism design is a significant differentiator for premium restaurant brands like FlavourFall. UI / UX Quality:
+Petpooja has no native clock-in/out. ToastMaster already has this — a genuine advantage. Built-in Staff Time Tracking:
+Petpooja offers item-wise auto deduction but recipe management requires manual setup. ToastMaster's recipe builder is more intuitive. Recipe-linked Auto-Deduction:
+Petpooja is a generic SaaS product. ToastMaster can be white-labelled as FlavourFall's own platform. Customisability & Branding:
+Petpooja charges per location per month (~$50) plus add-on costs for Captain App, KDS, CRM, etc. ToastMaster can offer a single bundled price for all 6 outlets. Pricing Transparency:
+Section 2 — 22 New Features to Build
+The following features are required to fully beat Petpooja for the FlavourFall use-case. They are grouped by module and prioritised by business impact.
+Module A — Multi-Outlet Command Centre
+#
+Feature & Rationale
+Business Impact
+A1
+Central Owner Dashboard
+Single screen showing live revenue, order counts, low-stock alerts, and staff status across all 6 FlavourFall outlets simultaneously. Outlet selector with quick drill-down. Petpooja calls this 'Head-office module' but it lacks real-time visual quality.
+Critical
+A2
+Outlet Switcher & Profile Management
+Managers can manage their own outlet; the owner can switch between all 6. Each outlet stores its own menu, staff, and settings while sharing a master CRM and inventory catalogue.
+Critical
+A3
+Cross-Outlet Analytics & Benchmarking
+Compare KPIs between outlets — revenue, avg order value, table turnover, top items — with chart overlays. Identify which outlet is underperforming and why. Petpooja offers zone groupings; ToastMaster should offer visual benchmarking.
+High
+A4
+Central Kitchen / Commissary Module
+A 'hub' outlet that produces semi-finished goods (doughs, sauces, marinated proteins) and dispatches them to branch outlets. Branch KDS shows items sourced from central kitchen. Stock auto-deducted at the hub.
+High
+Module B — Table & Floor Management
+#
+Feature & Rationale
+Business Impact
+B1
+Interactive Floor Plan Builder
+Drag-and-drop visual floor map per outlet. Tables marked with live status colours: Available (green), Occupied (amber), Reserved (blue), Needs Cleaning (grey). Critical for fine-dining service at FlavourFall.
+Critical
+B2
+Table Reservation & Booking System
+Accept phone, walk-in, and online reservations. Show a calendar view of bookings. Send automated WhatsApp/SMS confirmation. Block tables in advance. Petpooja requires third-party integration for this.
+High
+B3
+Split Bill & Merge Tables
+Split a single table bill between multiple guests (equal or custom split). Merge bills from two tables into one — essential for group dining. Each split generates an individual receipt.
+Critical
+B4
+Course-wise / KOT-wise Order Firing
+Waiters can hold items and fire them to the kitchen in courses (starters → mains → desserts). Kitchen only sees the active course. Prevents food arriving all at once.
+Medium
+Module C — Role-Based Hierarchy & Captain App
+#
+Feature & Rationale
+Business Impact
+C1
+5-Level Role Hierarchy
+Owner → Manager → Captain → Waiter/Barista/Chef. Each level has specific permissions. Owner sees all 6 outlets. Manager sees one outlet fully. Captain takes table orders. Waiter/Chef has limited view. Matches FlavourFall's exact org structure.
+Critical
+C2
+Captain Tablet App (Mobile POS)
+Captains walk the floor with a tablet, take table orders, and send directly to KDS — no walking to billing counter. Real-time sync. Supports combo and add-on selection. This is Petpooja's 'Captain App' — ToastMaster must build this.
+Critical
+C3
+Waiter Handoff & Table Assignment
+Assign specific tables to specific waiters per shift. All orders on those tables are attributed to that waiter. Enables per-waiter performance tracking and tip allocation.
+High
+C4
+Performance Scorecards per Staff
+Weekly/monthly report per staff member: covers, avg order value, upsell rate, attendance %, customer ratings. Exportable. Gives managers data to reward or coach staff.
+Medium
+Module D — KOT & Kitchen Enhancements
+#
+Feature & Rationale
+Business Impact
+D1
+Multi-Station KOT Printing
+Each menu item is tagged to a kitchen station (Grill, Cold Kitchen, Bar, Bakery). On order, separate KOT slips auto-print at each station. Avoids mis-routing. Petpooja offers this natively — ToastMaster must match it.
+Critical
+D2
+KOT Modification & Void Tracking
+Any modification or cancellation of a fired KOT requires Manager/Captain authorisation with reason logging. Prevents kitchen fraud. Full audit trail.
+High
+Module E — Online Ordering & Aggregator Integration
+#
+Feature & Rationale
+Business Impact
+E1
+Swiggy & Zomato Live Order Integration
+Pull live orders from Swiggy and Zomato directly into ToastMaster's order queue. Auto-generate KOT. Manage aggregator-specific menus and toggle availability. This single feature is a major Petpooja strength — essential to match.
+Critical
+E2
+QR Code Dine-In Self-Ordering
+Each table gets a QR code. Guests scan and browse the menu, customise, and place orders on their phone. Order goes directly to KDS. Reduces waiter load by 40%. Also works for takeaway order screens.
+High
+E3
+Aggregator Payout Reconciliation
+Upload Swiggy/Zomato settlement reports and auto-reconcile against ToastMaster's sales data. Shows commission charged, cancelled orders, net payout, and discrepancies. Petpooja offers this; it's a major pain point for chain operators.
+High
+Module F — Inventory & Purchasing Upgrades
+#
+Feature & Rationale
+Business Impact
+F1
+Purchase Order Management
+Raise POs to suppliers directly from ToastMaster. Supplier confirms delivery, stock auto-updates. Track pending, received, and overdue POs. Multi-outlet operators like FlavourFall spend hours managing supplier calls — this eliminates it.
+High
+F2
+Wastage & Spoilage Logging
+Staff log wasted/spoilt items with reason codes. Deducted from inventory. Daily wastage report highlights leakage. Restaurant chains lose 4-10% revenue to untracked wastage.
+High
+F3
+Recipe Cost Calculator
+For each menu item, auto-calculate cost of goods sold based on current ingredient prices. Show live gross margin per item. Alert when a price change erodes margins below threshold.
+Medium
+Module G — Customer & Loyalty Enhancements
+#
+Feature & Rationale
+Business Impact
+G1
+Unified CRM Across All 6 Outlets
+A customer who visits any FlavourFall outlet accumulates points in one wallet. Their visit history, preferences, and spend are visible to any outlet's manager. Petpooja has this as an add-on; ToastMaster should build it natively.
+High
+G2
+WhatsApp & SMS Marketing Campaigns
+Send targeted promotional messages: birthday offers, re-engagement for lapsed customers (no visit in 30 days), loyalty tier upgrade alerts. Template builder with variable merge fields. Measurable ROI per campaign.
+Medium
+Module H — Infrastructure & Reliability
+#
+Feature & Rationale
+Business Impact
+H1
+Offline-First PWA Mode
+When the internet drops (common during rush hours), ToastMaster continues to accept orders, fire KOTs, and process payments — syncing everything when connectivity restores. Petpooja has limited offline support; this is a real differentiator.
+Critical
+Section 3 — Unique Differentiators vs Petpooja
+3.1 What ToastMaster Can Do That Petpooja Cannot
+FlavourFall gets a fully white-labelled platform. No Petpooja branding. Every screen says 'FlavourFall'. This matters for a premium chain aiming to build brand equity. Premium Branded Experience:
+Petpooja has zero native time-tracking. ToastMaster already has this, saving FlavourFall the cost of a separate HR tool. Built-in Staff Clock-in/Clock-out:
+Already built in ToastMaster. Petpooja's receipts are plain thermal prints. This creates a modern, memorable guest experience. Animated Digital Invoices + WhatsApp Receipt:
+ToastMaster's client demo mode can simulate rush hours, restock inventory, and generate test orders — perfect for onboarding new staff at FlavourFall without risking live data. Demo Mode for Training:
+Petpooja's UI is functional but generic. ToastMaster's premium visual design reflects FlavourFall's quality positioning and reduces staff training friction. Glassmorphism UI Design:
+Petpooja charges per outlet plus add-ons (Captain App, KDS, CRM — each billed separately). ToastMaster can offer all features in one product at a single flat fee for all 6 outlets. Single Codebase, One Price:
+3.2 The 6-Outlet Value Proposition (Cost Comparison)
+Petpooja for 6 Outlets (Estimated)
+ToastMaster Enterprise
+Base POS: 6 × ₹4,000/mo = ₹24,000/mo
+All outlets: Single licence fee
+Captain App add-on: ₹6,000+/mo
+Captain App: Included
+KDS add-on: ₹3,000+/mo
+KDS: Included
+CRM / Loyalty add-on: ₹3,000+/mo
+CRM & Loyalty: Included
+Total: ~₹36,000–50,000/mo
+Total: Negotiable flat fee
+No white-labelling
+Full FlavourFall branding
+No in-house staff clock tracking
+Built-in time tracking
+Section 4 — Prioritised Development Roadmap
+Phase 1 — Non-Negotiable (Must-Have Before Pitch)
+These features are required for FlavourFall to even consider switching. Petpooja does all of these.
+🔴 A1 — Central Owner Dashboard (all 6 outlets live)
+🔴 A2 — Outlet Switcher & Profile Management
+🔴 B1 — Interactive Floor Plan with Live Table Status
+🔴 B3 — Split Bill & Merge Tables
+🔴 C1 — 5-Level Role Hierarchy (Owner → Chef)
+🔴 C2 — Captain Tablet App (Mobile POS)
+🔴 D1 — Multi-Station KOT Printing
+🔴 E1 — Swiggy & Zomato Live Order Integration
+🔴 H1 — Offline-First PWA Mode
+Phase 2 — Strong Differentiators (Close the Deal)
+These features match or exceed Petpooja while adding unique ToastMaster value.
+🟡 A3 — Cross-Outlet Benchmarking Analytics
+🟡 B2 — Table Reservation & Booking
+🟡 C3 — Waiter Table Assignment & Attribution
+🟡 D2 — KOT Modification with Fraud Audit Trail
+🟡 E2 — QR Code Self-Ordering
+🟡 E3 — Aggregator Payout Reconciliation
+🟡 F1 — Purchase Order Management to Suppliers
+🟡 F2 — Wastage & Spoilage Logging
+🟡 G1 — Unified CRM Across All 6 Outlets
+Phase 3 — Growth Features (Retain & Upsell)
+These add premium capabilities that Petpooja charges extra for.
+🟢 A4 — Central Kitchen / Commissary Module
+🟢 B4 — Course-wise Order Firing
+🟢 C4 — Staff Performance Scorecards
+🟢 F3 — Recipe Cost & Margin Calculator
+🟢 G2 — WhatsApp & SMS Marketing Campaigns
+Section 5 — Recommended Pitch Strategy for FlavourFall
+The following talking points are recommended when presenting ToastMaster to FlavourFall's ownership:
+Lead with the Pain Points
+'You currently pay Petpooja for 6 separate licences plus Captain App, KDS, and CRM add-ons separately. We bundle everything for all 6 outlets at one price.'
+'Every time your internet drops, Petpooja stops working. ToastMaster keeps running offline and syncs when you're back.'
+'Petpooja has no branding options — every screen shows their logo. With ToastMaster, it's FlavourFall's own platform.'
+Show the Demo
+Use ToastMaster's built-in Demo Mode to simulate a rush hour across 2 'outlets' on screen.
+Show the Captain App on a tablet taking a table order that fires to the KDS in real time.
+Show the central dashboard switching between outlets with live KPIs.
+Address Objections Pre-emptively
+'Petpooja has 1,00,000 restaurants — isn't it proven?' → Yes, but built for the average restaurant. ToastMaster is being built specifically for FlavourFall's needs, with their hierarchy, their branding, their workflows.
+'What about Swiggy/Zomato integration?' → Phase 1 delivery. We will not go live without it.
+'What if something breaks?' → Dedicated support SLA, not a generic helpdesk queue.
+ToastMaster — Built for FlavourFall, Not for Everyone
+22 new features. 3 phases. One platform for all 6 outlets.

@@ -127,82 +127,47 @@ const initials = (name) => name?.split(' ').map(n => n[0]).join('').toUpperCase(
 
 // ─── INITIAL SEED DATA ────────────────────────────────────────────────────────
 const SEED_MENU = [
-  { id: 'm1', name: 'Classic Espresso',     category: 'Coffee',    price: 180,  available: true,  img: 'Coffee', photo: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', description: 'Rich, bold espresso shot' },
-  { id: 'm2', name: 'Cappuccino Royale',    category: 'Coffee',    price: 240,  available: true,  img: 'Coffee', photo: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', description: 'Espresso with steamed milk foam' },
-  { id: 'm3', name: 'Caramel Macchiato',    category: 'Coffee',    price: 280,  available: true,  img: 'Coffee', photo: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&w=500&q=80', description: 'Vanilla syrup, milk, caramel drizzle' },
-  { id: 'm4', name: 'Flat White',           category: 'Coffee',    price: 220,  available: true,  img: 'Coffee', photo: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', description: 'Smooth velvety microfoam' },
-  { id: 'm5', name: 'Red Velvet Cake',      category: 'Cakes',     price: 1200, available: true,  img: 'Cake', photo: 'https://images.unsplash.com/photo-1616541823729-00fe0aacd32c?auto=format&fit=crop&w=500&q=80', description: 'Whole red velvet with cream cheese frosting' },
-  { id: 'm6', name: 'Belgian Truffle',      category: 'Cakes',     price: 1400, available: true,  img: 'Cake', photo: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=500&q=80', description: 'Dark chocolate truffle cream cake' },
-  { id: 'm7', name: 'Blueberry Cheesecake', category: 'Cakes',     price: 1100, available: true,  img: 'Cake', photo: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', description: 'Creamy baked cheesecake, blueberry topping' },
-  { id: 'm8', name: 'Butter Croissant',     category: 'Pastries',  price: 150,  available: true,  img: 'Cookie', photo: 'https://images.unsplash.com/photo-1549903072-7e6e0fb26faf?auto=format&fit=crop&w=500&q=80', description: 'Flaky French-style butter croissant' },
-  { id: 'm9', name: 'Pain au Chocolat',     category: 'Pastries',  price: 180,  available: false, img: 'Cookie', photo: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=500&q=80', description: 'Chocolate-filled croissant pastry' },
-  { id: 'm10', name: 'Almond Biscotti',     category: 'Pastries',  price: 90,   available: true,  img: 'Cookie', photo: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=500&q=80', description: 'Twice-baked Italian almond cookies' },
-  { id: 'm11', name: 'Club Sandwich',       category: 'Snacks',    price: 320,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80', description: 'Triple-decker club with chips' },
-  { id: 'm12', name: 'Paneer Wrap',         category: 'Snacks',    price: 190,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80', description: 'Grilled paneer tikka wrap' },
-  { id: 'm13', name: 'Iced Latte',          category: 'Beverages', price: 210,  available: true,  img: 'GlassWater', photo: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', description: 'Cold brew with chilled milk' },
-  { id: 'm14', name: 'Lemon Iced Tea',      category: 'Beverages', price: 160,  available: true,  img: 'GlassWater', photo: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=500&q=80', description: 'Freshly brewed lemon iced tea' },
-  { id: 'm15', name: 'Hot Chocolate',       category: 'Beverages', price: 250,  available: true,  img: 'Coffee', photo: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=500&q=80', description: 'Rich Belgian hot chocolate' },
+  { id: 'm1', name: 'Paneer Tikka',         category: 'Appetizers',  price: 280,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=500&q=80', description: 'Cottage cheese marinated in yogurt and spices' },
+  { id: 'm2', name: 'Spring Rolls',         category: 'Appetizers',  price: 220,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1593504049359-74330189a345?auto=format&fit=crop&w=500&q=80', description: 'Crispy fried rolls with vegetable filling' },
+  { id: 'm3', name: 'Butter Chicken',       category: 'Indian',      price: 450,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=500&q=80', description: 'Tender chicken in a rich, creamy tomato gravy' },
+  { id: 'm4', name: 'Dal Makhani',          category: 'Indian',      price: 320,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=500&q=80', description: 'Slow-cooked black lentils with butter and cream' },
+  { id: 'm5', name: 'Garlic Naan',          category: 'Indian',      price: 90,   available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80', description: 'Soft flatbread topped with garlic and butter' },
+  { id: 'm6', name: 'Hakka Noodles',        category: 'Chinese',     price: 260,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=500&q=80', description: 'Wok-tossed noodles with vegetables' },
+  { id: 'm7', name: 'Chilli Chicken',       category: 'Chinese',     price: 340,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=500&q=80', description: 'Spicy soy-glazed chicken with bell peppers' },
+  { id: 'm8', name: 'Margherita Pizza',     category: 'Italian',     price: 390,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=500&q=80', description: 'Classic tomato and fresh mozzarella pizza' },
+  { id: 'm9', name: 'Penne Arrabbiata',     category: 'Italian',     price: 350,  available: false, img: 'Utensils', photo: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=500&q=80', description: 'Pasta in a spicy tomato sauce' },
+  { id: 'm10', name: 'Grilled Salmon',      category: 'Main Course', price: 850,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=500&q=80', description: 'Fresh salmon with asparagus and lemon butter' },
+  { id: 'm11', name: 'Veg Sizzler',         category: 'Main Course', price: 480,  available: true,  img: 'Utensils', photo: 'https://images.unsplash.com/photo-1544025162-8315ea07620a?auto=format&fit=crop&w=500&q=80', description: 'Assorted vegetables and cutlet on a hot plate' },
+  { id: 'm12', name: 'Fresh Lime Soda',     category: 'Beverages',   price: 120,  available: true,  img: 'GlassWater', photo: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', description: 'Refreshing lime drink, sweet or salted' },
+  { id: 'm13', name: 'Mango Lassi',         category: 'Beverages',   price: 150,  available: true,  img: 'GlassWater', photo: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=500&q=80', description: 'Sweet yogurt drink blended with mango' },
+  { id: 'm14', name: 'Tiramisu',            category: 'Desserts',    price: 320,  available: true,  img: 'Cake', photo: 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=500&q=80', description: 'Coffee-flavored Italian dessert' },
+  { id: 'm15', name: 'Gulab Jamun',         category: 'Desserts',    price: 180,  available: true,  img: 'Cake', photo: 'https://images.unsplash.com/photo-1605197133333-3168285bd48a?auto=format&fit=crop&w=500&q=80', description: 'Sweet dough balls in rose sugar syrup' },
 ];
 
-const SEED_INVENTORY = [
-  { id: 'i1',  item: 'Coffee Beans (Arabica)', stock: 12,   unit: 'kg',     reorder: 5,  category: 'Beverage' },
-  { id: 'i2',  item: 'Whole Milk',             stock: 45,   unit: 'Liters', reorder: 10, category: 'Dairy' },
-  { id: 'i3',  item: 'All-Purpose Flour',       stock: 4,    unit: 'kg',     reorder: 10, category: 'Bakery' },
-  { id: 'i4',  item: 'Unsalted Butter',         stock: 8,    unit: 'kg',     reorder: 5,  category: 'Dairy' },
-  { id: 'i5',  item: 'Granulated Sugar',        stock: 15,   unit: 'kg',     reorder: 5,  category: 'Bakery' },
-  { id: 'i6',  item: 'Cocoa Powder',            stock: 0.5,  unit: 'kg',     reorder: 2,  category: 'Bakery' },
-  { id: 'i7',  item: 'Whipped Cream',           stock: 0,    unit: 'cans',   reorder: 5,  category: 'Dairy' },
-  { id: 'i8',  item: 'Fresh Berries',           stock: 2,    unit: 'kg',     reorder: 2,  category: 'Produce' },
-  { id: 'i9',  item: 'Vanilla Extract',         stock: 3,    unit: 'bottles',reorder: 1,  category: 'Bakery' },
-  { id: 'i10', item: 'Baking Powder',           stock: 6,    unit: 'packs',  reorder: 3,  category: 'Bakery' },
-];
+const SEED_CUSTOMERS = [];
 
-const SEED_CUSTOMERS = [
-  { id: 'c1',  name: 'Aditi Rao',         phone: '+91 98200 10001', email: 'aditi@email.com',   visits: 28, spend: 14200, points: 710, tier: 'Gold',   joinDate: '2024-01-15' },
-  { id: 'c2',  name: 'Kabir Khan',        phone: '+91 98200 10002', email: 'kabir@email.com',   visits: 12, spend: 5800,  points: 290, tier: 'Silver', joinDate: '2024-03-22' },
-  { id: 'c3',  name: 'Zoya Akhtar',       phone: '+91 98200 10003', email: 'zoya@email.com',    visits: 45, spend: 22500, points: 1125,tier: 'Gold',   joinDate: '2023-11-10' },
-  { id: 'c4',  name: 'Rohan Joshi',       phone: '+91 98200 10004', email: 'rohan@email.com',   visits: 7,  spend: 2100,  points: 105, tier: 'Bronze', joinDate: '2024-05-01' },
-  { id: 'c5',  name: 'Tanmay Bhat',       phone: '+91 98200 10005', email: 'tanmay@email.com',  visits: 19, spend: 9300,  points: 465, tier: 'Silver', joinDate: '2024-02-14' },
-  { id: 'c6',  name: 'Naveen Polishetty', phone: '+91 98200 10006', email: 'naveen@email.com',  visits: 33, spend: 16800, points: 840, tier: 'Gold',   joinDate: '2023-12-05' },
-  { id: 'c7',  name: 'Rahul Dua',         phone: '+91 98200 10007', email: 'rahul@email.com',   visits: 5,  spend: 1500,  points: 75,  tier: 'Bronze', joinDate: '2024-06-01' },
-  { id: 'c8',  name: 'Sapan Verma',       phone: '+91 98200 10008', email: 'sapan@email.com',   visits: 22, spend: 11000, points: 550, tier: 'Silver', joinDate: '2024-01-28' },
-  { id: 'c9',  name: 'Kaneez Surka',      phone: '+91 98200 10009', email: 'kaneez@email.com',  visits: 51, spend: 25500, points: 1275,tier: 'Gold',   joinDate: '2023-09-15' },
-  { id: 'c10', name: 'Biswa Kalyan',      phone: '+91 98200 10010', email: 'biswa@email.com',   visits: 14, spend: 7000,  points: 350, tier: 'Silver', joinDate: '2024-04-10' },
-];
+const SEED_STAFF = [];
 
-const SEED_STAFF = [
-  { id: 's1', name: 'Arjun Kapoor',   role: 'Manager',     shift: 'Morning', attendance: 'Present',  contact: '9820012345', email: 'arjun@ff.com',   joinDate: '2022-03-01' },
-  { id: 's2', name: 'Sana Shaikh',    role: 'Cashier',     shift: 'Morning', attendance: 'Present',  contact: '9820012346', email: 'sana@ff.com',    joinDate: '2022-07-15' },
-  { id: 's3', name: 'Chef Marco',     role: 'Head Baker',  shift: 'Morning', attendance: 'Present',  contact: '9820012347', email: 'marco@ff.com',   joinDate: '2021-11-20' },
-  { id: 's4', name: 'Deepak Raj',     role: 'Waiter',      shift: 'Evening', attendance: 'Absent',   contact: '9820012348', email: 'deepak@ff.com',  joinDate: '2023-02-10' },
-  { id: 's5', name: 'Priya Singh',    role: 'Barista',     shift: 'Morning', attendance: 'Present',  contact: '9820012349', email: 'priya@ff.com',   joinDate: '2023-05-25' },
-  { id: 's6', name: 'Vijay Varma',    role: 'Chef',        shift: 'Evening', attendance: 'Half Day', contact: '9820012350', email: 'vijay@ff.com',   joinDate: '2022-08-14' },
-];
+const SEED_ORDERS = [];
 
-const SEED_ORDERS = [
-  { id: 'FF-1024', customer: 'Aditi Rao',    customerId: 'c1', items: [{ menuId:'m2', name:'Cappuccino Royale', qty:1, price:240 },{ menuId:'m8', name:'Butter Croissant', qty:2, price:150 }], subtotal: 540, gst: 97, total: 637, status: 'Delivered', method: 'UPI',  time: new Date(Date.now()-600000).toISOString(), note: '' },
-  { id: 'FF-1025', customer: 'Kabir Khan',   customerId: 'c2', items: [{ menuId:'m6', name:'Belgian Truffle', qty:1, price:1400 }],                                                                 subtotal: 1400, gst: 252, total: 1652, status: 'Preparing', method: 'Card', time: new Date(Date.now()-300000).toISOString(), note: 'Less sugar' },
-  { id: 'FF-1026', customer: 'Zoya Akhtar',  customerId: 'c3', items: [{ menuId:'m2', name:'Cappuccino Royale', qty:1, price:240 },{ menuId:'m11', name:'Club Sandwich', qty:1, price:320 }],       subtotal: 560, gst: 100, total: 660, status: 'Ready',    method: 'Cash', time: new Date(Date.now()-120000).toISOString(), note: '' },
-  { id: 'FF-1027', customer: 'Rohan Joshi',  customerId: 'c4', items: [{ menuId:'m13', name:'Iced Latte', qty:1, price:210 }],                                                                      subtotal: 210, gst: 37, total: 247, status: 'Delivered', method: 'UPI',  time: new Date(Date.now()-900000).toISOString(), note: '' },
-  { id: 'FF-1028', customer: 'Tanmay Bhat',  customerId: 'c5', items: [{ menuId:'m10', name:'Almond Biscotti', qty:2, price:90 },{ menuId:'m1', name:'Classic Espresso', qty:1, price:180 }],       subtotal: 360, gst: 64, total: 424, status: 'Pending',  method: 'Card', time: new Date(Date.now()-60000).toISOString(),  note: 'Extra hot' },
+const SEED_RESERVATIONS = [
+  { id: 'r1', customerName: 'Ananya Iyer', phone: '+91 98765 43210', date: new Date().toISOString().split('T')[0], time: '19:30', guests: 4, outlet: '1', tableNo: 'T12', status: 'Confirmed', notes: 'Window seat preferred' },
+  { id: 'r2', customerName: 'Rahul Sharma', phone: '+91 99887 76655', date: new Date().toISOString().split('T')[0], time: '20:00', guests: 2, outlet: '1', tableNo: '', status: 'Pending', notes: 'Anniversary dinner' },
 ];
 
 const SEED_NOTIFICATIONS = [
   { id: 'n1', type: 'order',    title: 'New Order Received',    msg: 'Order FF-1028 from Tanmay Bhat',        time: new Date(Date.now()-60000).toISOString(),  read: false },
-  { id: 'n2', type: 'stock',   title: 'Low Stock Alert',        msg: 'All-Purpose Flour is below reorder level', time: new Date(Date.now()-3600000).toISOString(), read: false },
-  { id: 'n3', type: 'stock',   title: 'Out of Stock',           msg: 'Whipped Cream is out of stock',         time: new Date(Date.now()-7200000).toISOString(), read: true  },
 ];
 
 const SEED_SETTINGS = {
-  cafeName: 'ToastMaster',
-  tagline: 'Café & Bakery',
+  cafeName: 'FlavourFall Restaurant',
+  tagline: 'Multi-Cuisine Fine Dining',
   gst: 18,
   currency: '₹',
-  receiptFooter: 'Thank you for visiting ToastMaster! Come back soon.',
+  receiptFooter: 'Thank you for visiting FlavourFall! Come back soon.',
   adminName: 'Arjun Kapoor',
   theme: 'light',
   notifyNewOrder: true,
-  notifyLowStock: true,
   notifyNewCustomer: true,
 };
 
@@ -216,14 +181,23 @@ const AppContext = createContext(null);
 const getLS = (key, def) => { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; } };
 const setLS = (key, val) => { try { localStorage.setItem(key, JSON.stringify(val)); } catch {} };
 
+if (!getLS('ff_tables_init', false)) {
+  try { localStorage.removeItem('ff_orders'); setLS('ff_tables_init', true); } catch {}
+}
+
+if (!getLS('ff_restaurant_init', false)) {
+  try { localStorage.removeItem('ff_menu'); localStorage.removeItem('ff_settings'); setLS('ff_restaurant_init', true); } catch {}
+}
+
 const initialState = {
+  activeOutlet:  getLS('ff_activeOutlet',  'All'),
   orders:        getLS('ff_orders',        SEED_ORDERS),
   menuItems:     getLS('ff_menu',          SEED_MENU),
-  inventory:     getLS('ff_inventory',     SEED_INVENTORY),
   customers:     getLS('ff_customers',     SEED_CUSTOMERS),
   staff:         getLS('ff_staff',         SEED_STAFF),
   notifications: getLS('ff_notifications', SEED_NOTIFICATIONS),
   settings:      getLS('ff_settings',      SEED_SETTINGS),
+  reservations:  getLS('ff_reservations',  SEED_RESERVATIONS),
   toasts:        [],
 };
 
@@ -232,19 +206,7 @@ function appReducer(state, action) {
   switch (action.type) {
     // ORDERS
     case 'ADD_ORDER': {
-      let newInventory = [...state.inventory];
-      action.payload.items.forEach(orderItem => {
-        const menuItem = state.menuItems.find(m => m.id === orderItem.menuId);
-        if (menuItem && menuItem.recipe) {
-          menuItem.recipe.forEach(req => {
-            const idx = newInventory.findIndex(inv => inv.id === req.id);
-            if (idx >= 0) {
-              newInventory[idx] = { ...newInventory[idx], stock: Math.max(0, newInventory[idx].stock - (req.qty * orderItem.qty)) };
-            }
-          });
-        }
-      });
-      next = { ...state, orders: [action.payload, ...state.orders], inventory: newInventory };
+      next = { ...state, orders: [action.payload, ...state.orders] };
       break;
     }
     case 'UPDATE_ORDER':
@@ -279,18 +241,15 @@ function appReducer(state, action) {
     case 'ADD_MENU': next = { ...state, menuItems: [action.payload, ...state.menuItems] }; break;
     case 'UPDATE_MENU': next = { ...state, menuItems: state.menuItems.map(m => m.id === action.payload.id ? { ...m, ...action.payload } : m) }; break;
     case 'DELETE_MENU': next = { ...state, menuItems: state.menuItems.filter(m => m.id !== action.payload) }; break;
-    // INVENTORY
-    case 'ADD_INVENTORY': next = { ...state, inventory: [action.payload, ...state.inventory] }; break;
-    case 'UPDATE_INVENTORY': next = { ...state, inventory: state.inventory.map(i => i.id === action.payload.id ? { ...i, ...action.payload } : i) }; break;
-    case 'DELETE_INVENTORY': next = { ...state, inventory: state.inventory.filter(i => i.id !== action.payload) }; break;
-    case 'ADJUST_STOCK':
-      next = { ...state, inventory: state.inventory.map(i => i.id === action.payload.id ? { ...i, stock: Math.max(0, i.stock + action.payload.delta) } : i) };
-      break;
-    // CUSTOMERS
+
     case 'ADD_CUSTOMER': next = { ...state, customers: [action.payload, ...state.customers] }; break;
     case 'UPDATE_CUSTOMER': next = { ...state, customers: state.customers.map(c => c.id === action.payload.id ? { ...c, ...action.payload } : c) }; break;
     case 'DELETE_CUSTOMER': next = { ...state, customers: state.customers.filter(c => c.id !== action.payload) }; break;
     case 'ADD_VISIT': next = { ...state, customers: state.customers.map(c => c.id === action.payload ? { ...c, visits: c.visits + 1, spend: c.spend + randomInt(150, 800), points: c.points + randomInt(10, 50) } : c) }; break;
+    // RESERVATIONS
+    case 'ADD_RESERVATION': next = { ...state, reservations: [action.payload, ...state.reservations] }; break;
+    case 'UPDATE_RESERVATION': next = { ...state, reservations: state.reservations.map(r => r.id === action.payload.id ? { ...r, ...action.payload } : r) }; break;
+    case 'DELETE_RESERVATION': next = { ...state, reservations: state.reservations.filter(r => r.id !== action.payload) }; break;
     // STAFF
     case 'ADD_STAFF': next = { ...state, staff: [action.payload, ...state.staff] }; break;
     case 'UPDATE_STAFF': next = { ...state, staff: state.staff.map(s => s.id === action.payload.id ? { ...s, ...action.payload } : s) }; break;
@@ -316,19 +275,19 @@ function appReducer(state, action) {
     // TOASTS
     case 'ADD_TOAST': next = { ...state, toasts: [...state.toasts, action.payload] }; break;
     case 'REMOVE_TOAST': next = { ...state, toasts: state.toasts.filter(t => t.id !== action.payload) }; break;
+    case 'SET_OUTLET': next = { ...state, activeOutlet: action.payload }; break;
     // DEMO
     case 'BULK_ADD_ORDERS': next = { ...state, orders: [...action.payload, ...state.orders] }; break;
     case 'BULK_ADD_CUSTOMERS': next = { ...state, customers: [...action.payload, ...state.customers] }; break;
     case 'RESTOCK_ALL':
-      next = { ...state, inventory: state.inventory.map(i => ({ ...i, stock: i.reorder * randomInt(3, 8) })) };
       break;
     case 'RESET_DEMO':
-      next = { orders: SEED_ORDERS, menuItems: SEED_MENU, inventory: SEED_INVENTORY, customers: SEED_CUSTOMERS, staff: SEED_STAFF, notifications: SEED_NOTIFICATIONS, settings: SEED_SETTINGS, toasts: [] };
+      next = { activeOutlet: 'All', orders: SEED_ORDERS, menuItems: SEED_MENU, customers: SEED_CUSTOMERS, staff: SEED_STAFF, notifications: SEED_NOTIFICATIONS, settings: SEED_SETTINGS, reservations: SEED_RESERVATIONS, toasts: [] };
       break;
     default: return state;
   }
   // Persist to localStorage
-  const persist = ['orders','menuItems','inventory','customers','staff','notifications','settings'];
+  const persist = ['activeOutlet','orders','menuItems','customers','staff','notifications','settings','reservations'];
   persist.forEach(k => { if (next[k] !== state[k]) setLS('ff_' + (k === 'menuItems' ? 'menu' : k.replace('Items','')), next[k]); });
   if (next.settings !== state.settings) setLS('ff_settings', next.settings);
   return next;
@@ -356,13 +315,13 @@ const useApp = () => useContext(AppContext);
 // ─── DERIVED DATA HELPERS ─────────────────────────────────────────────────────
 function useStats(state) {
   return useMemo(() => {
-    const orders = state.orders;
+    const isAll = state.activeOutlet === 'All';
+    const orders = state.orders.filter(o => isAll || o.outlet === state.activeOutlet);
     const delivered = orders.filter(o => o.status === 'Delivered');
     const revenue = delivered.reduce((s, o) => s + o.total, 0);
     const pending = orders.filter(o => o.status === 'Pending').length;
     const preparing = orders.filter(o => o.status === 'Preparing').length;
     const ready = orders.filter(o => o.status === 'Ready').length;
-    const lowStock = state.inventory.filter(i => i.stock <= i.reorder).length;
 
     // Weekly revenue from last 7 days
     const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -383,8 +342,8 @@ function useStats(state) {
       name, sales, color: ['#09090b','#27272a','#52525b','#71717a','#a1a1aa'][i]
     }));
 
-    return { totalOrders: orders.length, revenue, pending, preparing, ready, delivered: delivered.length, lowStock, weeklyData, topProducts };
-  }, [state.orders, state.inventory]);
+    return { totalOrders: orders.length, revenue, pending, preparing, ready, delivered: delivered.length, weeklyData, topProducts };
+  }, [state.orders, state.activeOutlet]);
 }
 
 // ─── SHARED UI ────────────────────────────────────────────────────────────────
@@ -695,7 +654,6 @@ const GlobalSearch = ({ onNavigate }) => {
       orders: state.orders.filter(o => o.id.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q)).slice(0, 3),
       menu: state.menuItems.filter(m => m.name.toLowerCase().includes(q) || m.category.toLowerCase().includes(q)).slice(0, 3),
       customers: state.customers.filter(c => c.name.toLowerCase().includes(q) || c.phone.includes(q)).slice(0, 3),
-      inventory: state.inventory.filter(i => i.item.toLowerCase().includes(q)).slice(0, 3),
     };
   }, [query, state]);
 
@@ -748,17 +706,7 @@ const GlobalSearch = ({ onNavigate }) => {
               ))}
             </div>
           )}
-          {results.inventory?.length > 0 && (
-            <div>
-              <div className="px-4 py-2 bg-gray-50 text-xs font-bold text-gray-500 uppercase tracking-wider">Inventory</div>
-              {results.inventory.map(i => (
-                <button key={i.id} onClick={() => { onNavigate('Inventory'); setQuery(''); setFocused(false); }} className="w-full flex items-center justify-between px-4 py-3 hover:bg-zinc-100 transition-colors">
-                  <span className="text-sm text-gray-800">{i.item}</span>
-                  <span className={`text-xs font-semibold ${i.stock <= i.reorder ? 'text-zinc-950 font-bold' : 'text-zinc-500'}`}>{i.stock} {i.unit}</span>
-                </button>
-              ))}
-            </div>
-          )}
+
         </div>
       )}
     </div>
@@ -766,8 +714,9 @@ const GlobalSearch = ({ onNavigate }) => {
 };
 
 // ─── ORDERS MODULE ────────────────────────────────────────────────────────────
-const OrderModal = ({ open, onClose, editOrder = null, onOrderCreated }) => {
+const OrderModal = ({ open, onClose, editOrder = null, prefilledTable = null, onOrderCreated }) => {
   const { state, dispatch, toast, notify } = useApp();
+  const [tableId, setTableId] = useState('');
   const [customer, setCustomer] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
@@ -783,9 +732,10 @@ const OrderModal = ({ open, onClose, editOrder = null, onOrderCreated }) => {
     if (editOrder) {
       setCustomer(editOrder.customer); setCustomerId(editOrder.customerId); setCustSearch(editOrder.customer); setCustomerPhone(editOrder.customerPhone || '');
       setSelectedItems(editOrder.items.map(i => ({...i}))); setMethod(editOrder.method);
-      setNote(editOrder.note || ''); setStatus(editOrder.status);
+      setNote(editOrder.note || ''); setStatus(editOrder.status); setTableId(editOrder.table || '');
     } else {
-      setCustomer(''); setCustomerId(''); setCustSearch(''); setCustomerPhone(''); setSelectedItems([]); setMethod('UPI'); setNote(''); setStatus('Preparing');
+      const initCust = prefilledTable ? `Table ${prefilledTable}` : '';
+      setCustomer(initCust); setCustomerId(prefilledTable ? `t${prefilledTable}` : ''); setCustSearch(initCust); setCustomerPhone(''); setSelectedItems([]); setMethod('UPI'); setNote(''); setStatus('Preparing'); setTableId(prefilledTable || '');
     }
     setItemSearch('');
     setShowCustDrop(false);
@@ -811,10 +761,10 @@ const OrderModal = ({ open, onClose, editOrder = null, onOrderCreated }) => {
   const handleSubmit = () => {
     if (!customer || selectedItems.length === 0) { toast('Please fill all required fields', 'error'); return; }
     if (editOrder) {
-      dispatch({ type: 'UPDATE_ORDER', payload: { ...editOrder, customer, customerId, customerPhone, items: selectedItems, subtotal, gst, total, method, note, status } });
+      dispatch({ type: 'UPDATE_ORDER', payload: { ...editOrder, customer, customerId, customerPhone, items: selectedItems, subtotal, gst, total, method, note, status, table: tableId } });
       toast('Order updated successfully', 'success');
     } else {
-      const newOrder = { id: uid(), customer, customerId, customerPhone, items: selectedItems, subtotal, gst, total, method, note, status: 'Preparing', time: new Date().toISOString() };
+      const newOrder = { id: uid(), customer, customerId, customerPhone, items: selectedItems, subtotal, gst, total, method, note, status: 'Preparing', time: new Date().toISOString(), outlet: state.activeOutlet !== 'All' ? state.activeOutlet : '1', table: tableId };
       dispatch({ type: 'ADD_ORDER', payload: newOrder });
       if (state.settings.notifyNewOrder) notify('order', 'New Order Received', `Order ${newOrder.id} from ${customer}`);
       toast(`Order ${newOrder.id} created!`, 'success');
@@ -826,7 +776,7 @@ const OrderModal = ({ open, onClose, editOrder = null, onOrderCreated }) => {
   const filteredMenu = state.menuItems.filter(m => m.available && (!itemSearch || m.name.toLowerCase().includes(itemSearch.toLowerCase()) || m.category.toLowerCase().includes(itemSearch.toLowerCase())));
 
   return (
-    <Modal open={open} onClose={onClose} title={editOrder ? `Edit Order ${editOrder.id}` : 'Create New Order'} size="xl">
+    <Modal open={open} onClose={onClose} title={editOrder ? `Edit Order ${editOrder.id} ${tableId ? `(Table ${tableId})` : ''}` : `Create New Order ${tableId ? `(Table ${tableId})` : ''}`} size="xl">
       <div className="flex flex-col md:flex-row bg-gray-50/50">
         {/* Left Side: Form */}
         <div className="flex-1 p-6 space-y-5 border-r border-gray-100 bg-white overflow-y-auto">
@@ -964,23 +914,32 @@ const OrdersView = () => {
   const [createOpen, setCreateOpen] = useState(false);
   const [editOrder, setEditOrder] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+  const [viewMode, setViewMode] = useState('Map'); // 'Map' or 'History'
   const [activeInvoice, setActiveInvoice] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedTable, setSelectedTable] = useState(null);
   const PER_PAGE = 10;
+
+  const TABLES_COUNT = 15;
+  const tables = Array.from({ length: TABLES_COUNT }, (_, i) => i + 1);
 
   useEffect(() => { const t = setTimeout(() => setLoading(false), 500); return () => clearTimeout(t); }, []);
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
+    const isAll = state.activeOutlet === 'All';
     return state.orders.filter(o =>
+      (isAll || o.outlet === state.activeOutlet) &&
       (!q || o.id.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q) || o.items.some(i => i.name.toLowerCase().includes(q))) &&
       (statusFilter === 'All' || o.status === statusFilter)
     );
-  }, [state.orders, search, statusFilter]);
+  }, [state.orders, search, statusFilter, state.activeOutlet]);
 
   const paginated = filtered.slice((page-1)*PER_PAGE, page*PER_PAGE);
-  const counts = { All: state.orders.length, Pending: 0, Preparing: 0, Ready: 0, Delivered: 0 };
-  state.orders.forEach(o => { if (counts[o.status] !== undefined) counts[o.status]++; });
+  const isAll = state.activeOutlet === 'All';
+  const activeOrders = isAll ? state.orders : state.orders.filter(o => o.outlet === state.activeOutlet);
+  const counts = { All: activeOrders.length, Pending: 0, Preparing: 0, Ready: 0, Delivered: 0 };
+  activeOrders.forEach(o => { if (counts[o.status] !== undefined) counts[o.status]++; });
 
   const handleDelete = (id) => { dispatch({ type: 'DELETE_ORDER', payload: id }); toast('Order deleted', 'info'); };
   const advanceStatus = (id) => { dispatch({ type: 'ADVANCE_ORDER', payload: id }); toast('Order status updated', 'success'); };
@@ -995,12 +954,49 @@ const OrdersView = () => {
           <h1 className="text-2xl font-black text-gray-900">Order Management</h1>
           <p className="text-gray-400 text-sm mt-1">Track, manage and fulfil customer orders</p>
         </div>
-        <button onClick={() => setCreateOpen(true)} className="flex items-center space-x-2 bg-black text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-zinc-800 transition-all shadow-sm hover:shadow-md">
+        <div className="flex space-x-2 bg-gray-100 p-1 rounded-xl">
+          <button onClick={() => setViewMode('Map')} className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${viewMode === 'Map' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}>Table Map</button>
+          <button onClick={() => setViewMode('History')} className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${viewMode === 'History' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}>Order History</button>
+        </div>
+        <button onClick={() => { setSelectedTable(null); setCreateOpen(true); }} className="flex items-center space-x-2 bg-black text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-zinc-800 transition-all shadow-sm hover:shadow-md">
           <Icon name="Plus" size={18} /><span>New Order</span>
         </button>
       </div>
 
-      {/* Summary Cards */}
+      {viewMode === 'Map' ? (
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-6">Outlet Tables</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {tables.map(tId => {
+              const activeOrder = activeOrders.find(o => o.table === tId && o.status !== 'Delivered');
+              const isOccupied = !!activeOrder;
+              return (
+                <button 
+                  key={tId} 
+                  onClick={() => {
+                    if (isOccupied) {
+                      setEditOrder(activeOrder);
+                      setCreateOpen(true);
+                    } else {
+                      setSelectedTable(tId);
+                      setCreateOpen(true);
+                    }
+                  }}
+                  className={`relative flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all group ${isOccupied ? 'bg-zinc-900 border-zinc-900 text-white shadow-md hover:bg-black' : 'bg-white border-gray-200 text-gray-700 hover:border-black hover:shadow-sm'}`}
+                >
+                  <Icon name="Coffee" size={28} className={`mb-3 ${isOccupied ? 'text-zinc-300 group-hover:text-white' : 'text-gray-400 group-hover:text-black'}`} />
+                  <span className="text-lg font-black tracking-wide">T{tId}</span>
+                  <span className={`text-xs font-semibold mt-1 uppercase tracking-wider ${isOccupied ? 'text-zinc-400' : 'text-gray-400'}`}>{isOccupied ? 'Occupied' : 'Available'}</span>
+                  {isOccupied && <span className="absolute top-3 right-3 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>}
+                  {isOccupied && activeOrder.customer && <span className="text-[10px] text-zinc-400 mt-2 truncate w-full px-2">{activeOrder.customer}</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {['Pending','Preparing','Ready','Delivered'].map(s => (
           <button key={s} onClick={() => { setStatusFilter(s === statusFilter ? 'All' : s); setPage(1); }}
@@ -1087,8 +1083,10 @@ const OrdersView = () => {
           </>
         )}
       </div>
+      </>
+      )}
 
-      <OrderModal open={createOpen || !!editOrder} onClose={() => { setCreateOpen(false); setEditOrder(null); }} editOrder={editOrder} onOrderCreated={order => setActiveInvoice(order)} />
+      {createOpen && <OrderModal open={createOpen} onClose={() => { setCreateOpen(false); setEditOrder(null); setSelectedTable(null); }} editOrder={editOrder} prefilledTable={selectedTable} onOrderCreated={order => setActiveInvoice(order)} />}
       <InvoiceModal open={!!activeInvoice} onClose={() => setActiveInvoice(null)} order={activeInvoice} />
       <ConfirmModal open={!!deleteId} onClose={() => setDeleteId(null)} onConfirm={() => handleDelete(deleteId)} title="Delete Order" message={`Are you sure you want to delete order ${deleteId}? This action cannot be undone.`} />
     </div>
@@ -1099,9 +1097,9 @@ const OrdersView = () => {
 const MenuItemModal = ({ open, onClose, editItem = null }) => {
   const { state, dispatch, toast } = useApp();
   const icons = ['Coffee', 'Cake', 'Cookie', 'Utensils', 'GlassWater', 'ChefHat', 'ShoppingBag', 'Package'];
-  const categories = ['Coffee','Cakes','Pastries','Snacks','Beverages'];
-  const [form, setForm] = useState({ name:'', category:'Coffee', price:'', available:true, img:'Coffee', description:'', photo:'', recipe: [] });
-  useEffect(() => { if (editItem) setForm({ ...editItem, price: String(editItem.price), recipe: editItem.recipe || [] }); else setForm({ name:'', category:'Coffee', price:'', available:true, img:'Coffee', description:'', photo:'', recipe: [] }); }, [open, editItem]);
+  const categories = ['Appetizers','Main Course','Indian','Chinese','Italian','Beverages','Desserts'];
+  const [form, setForm] = useState({ name:'', category:'Appetizers', price:'', available:true, img:'Utensils', description:'', photo:'', recipe: [] });
+  useEffect(() => { if (editItem) setForm({ ...editItem, price: String(editItem.price), recipe: editItem.recipe || [] }); else setForm({ name:'', category:'Appetizers', price:'', available:true, img:'Utensils', description:'', photo:'', recipe: [] }); }, [open, editItem]);
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const handleSubmit = () => {
     if (!form.name || !form.price) { toast('Name and price are required', 'error'); return; }
@@ -1144,22 +1142,6 @@ const MenuItemModal = ({ open, onClose, editItem = null }) => {
           <Input label="Price (₹)" required type="number" value={form.price} onChange={e => set('price', e.target.value)} placeholder="e.g. 250" />
         </div>
         <Input label="Description" value={form.description} onChange={e => set('description', e.target.value)} placeholder="Brief description..." />
-        
-        <div className="space-y-3 pt-3 border-t border-gray-100">
-          <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide">Recipe Builder (Auto-Deduct Stock)</label>
-          {form.recipe.map((r, i) => (
-            <div key={i} className="flex items-center space-x-2">
-              <select value={r.id} onChange={e => { const newRec = [...form.recipe]; newRec[i].id = e.target.value; set('recipe', newRec); }} className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:border-black focus:ring-1">
-                <option value="">Select Ingredient...</option>
-                {state.inventory.map(inv => <option key={inv.id} value={inv.id}>{inv.item} ({inv.unit})</option>)}
-              </select>
-              <input type="number" step="0.01" value={r.qty} onChange={e => { const newRec = [...form.recipe]; newRec[i].qty = Number(e.target.value); set('recipe', newRec); }} placeholder="Qty" className="w-20 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:border-black focus:ring-1" />
-              <button onClick={() => set('recipe', form.recipe.filter((_, idx) => idx !== i))} className="p-2 text-red-500 hover:bg-red-50 rounded-lg"><Icon name="X" size={16} /></button>
-            </div>
-          ))}
-          <button onClick={() => set('recipe', [...form.recipe, { id: '', qty: '' }])} className="text-xs font-semibold text-gray-600 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">+ Add Ingredient</button>
-        </div>
-
         <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl mt-4">
           <div><p className="text-sm font-semibold text-gray-800">Available</p><p className="text-xs text-gray-400">Show on menu for ordering</p></div>
           <button onClick={() => set('available', !form.available)} className={`relative w-11 h-6 rounded-full transition-colors ${form.available ? 'bg-black' : 'bg-gray-300'}`}>
@@ -1177,7 +1159,7 @@ const MenuItemModal = ({ open, onClose, editItem = null }) => {
 
 const KitchenView = () => {
   const { state, dispatch, toast } = useApp();
-  const preparingOrders = state.orders.filter(o => o.status === 'Preparing').sort((a, b) => new Date(a.time) - new Date(b.time));
+  const preparingOrders = state.orders.filter(o => o.status === 'Preparing' && (state.activeOutlet === 'All' || o.outlet === state.activeOutlet)).sort((a, b) => new Date(a.time) - new Date(b.time));
 
   return (
     <div className="space-y-6 animate-fade-in h-full flex flex-col">
@@ -1207,7 +1189,10 @@ const KitchenView = () => {
               <div key={order.id} className={`bg-white rounded-2xl shadow-sm border-2 overflow-hidden flex flex-col ${isUrgent ? 'border-red-500' : 'border-gray-200'}`}>
                 <div className={`p-4 flex justify-between items-center text-white ${isUrgent ? 'bg-red-500' : 'bg-black'}`}>
                   <div>
-                    <h2 className="text-xl font-black">#{order.id}</h2>
+                    <h2 className="text-xl font-black flex items-center space-x-2">
+                      <span>#{order.id}</span>
+                      {order.table && <span className="bg-white text-black px-2 py-0.5 rounded text-sm tracking-wide">Table {order.table}</span>}
+                    </h2>
                     <p className="text-sm opacity-80">{order.customer}</p>
                   </div>
                   <div className="text-right">
@@ -1264,7 +1249,7 @@ const MenuView = () => {
     return state.menuItems.filter(m => (cat === 'All' || m.category === cat) && (!q || m.name.toLowerCase().includes(q) || m.category.toLowerCase().includes(q)));
   }, [state.menuItems, cat, search]);
 
-  const cats = ['All','Coffee','Cakes','Pastries','Snacks','Beverages'];
+  const cats = ['All','Appetizers','Main Course','Indian','Chinese','Italian','Beverages','Desserts'];
   const catCount = (c) => state.menuItems.filter(m => c === 'All' || m.category === c).length;
 
   return (
@@ -1320,168 +1305,6 @@ const MenuView = () => {
 
       <MenuItemModal open={addOpen || !!editItem} onClose={() => { setAddOpen(false); setEditItem(null); }} editItem={editItem} />
       <ConfirmModal open={!!deleteId} onClose={() => setDeleteId(null)} onConfirm={() => { dispatch({ type: 'DELETE_MENU', payload: deleteId }); toast('Item removed from menu', 'info'); }} title="Remove Menu Item" message="Are you sure you want to remove this item from the menu?" />
-    </div>
-  );
-};
-
-// ─── INVENTORY MODULE ──────────────────────────────────────────────────────────
-const InventoryModal = ({ open, onClose, editItem = null }) => {
-  const { dispatch, toast } = useApp();
-  const [form, setForm] = useState({ item:'', stock:'', unit:'kg', reorder:'', category:'Bakery' });
-  useEffect(() => { if (editItem) setForm({ ...editItem, stock: String(editItem.stock), reorder: String(editItem.reorder) }); else setForm({ item:'', stock:'', unit:'kg', reorder:'', category:'Bakery' }); }, [open, editItem]);
-  const set = (k,v) => setForm(f => ({...f, [k]:v}));
-  const handleSubmit = () => {
-    if (!form.item || form.stock === '') { toast('Please fill all required fields', 'error'); return; }
-    const payload = { ...form, stock: Number(form.stock), reorder: Number(form.reorder) };
-    if (editItem) { dispatch({ type: 'UPDATE_INVENTORY', payload: { ...editItem, ...payload } }); toast('Inventory updated', 'success'); }
-    else { dispatch({ type: 'ADD_INVENTORY', payload: { ...payload, id: 'i' + Date.now() } }); toast('Item added to inventory', 'success'); }
-    onClose();
-  };
-  return (
-    <Modal open={open} onClose={onClose} title={editItem ? 'Edit Inventory Item' : 'Add Inventory Item'} size="sm">
-      <div className="p-6 space-y-4">
-        <Input label="Ingredient Name" required value={form.item} onChange={e => set('item', e.target.value)} placeholder="e.g. Oat Milk" />
-        <div className="grid grid-cols-2 gap-3">
-          <Input label="Current Stock" required type="number" value={form.stock} onChange={e => set('stock', e.target.value)} placeholder="0" />
-          <Select label="Unit" value={form.unit} onChange={e => set('unit', e.target.value)}>
-            {['kg','g','Liters','ml','cans','bottles','packs','units'].map(u => <option key={u}>{u}</option>)}
-          </Select>
-        </div>
-        <Input label="Reorder Level" type="number" value={form.reorder} onChange={e => set('reorder', e.target.value)} placeholder="Min stock before alert" />
-        <Select label="Category" value={form.category} onChange={e => set('category', e.target.value)}>
-          {['Bakery','Dairy','Beverage','Produce','Packaging'].map(c => <option key={c}>{c}</option>)}
-        </Select>
-        <div className="flex justify-end space-x-3">
-          <button onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50">Cancel</button>
-          <button onClick={handleSubmit} className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-zinc-800">{editItem ? 'Save' : 'Add Item'}</button>
-        </div>
-      </div>
-    </Modal>
-  );
-};
-
-const InventoryView = () => {
-  const { state, dispatch, toast, notify } = useApp();
-  const [search, setSearch] = useState('');
-  const [addOpen, setAddOpen] = useState(false);
-  const [editItem, setEditItem] = useState(null);
-  const [deleteId, setDeleteId] = useState(null);
-  const [adjustId, setAdjustId] = useState(null);
-  const [adjustVal, setAdjustVal] = useState('');
-  const [loading, setLoading] = useState(true);
-  useEffect(() => { const t = setTimeout(() => setLoading(false), 400); return () => clearTimeout(t); }, []);
-
-  const filtered = useMemo(() => {
-    const q = search.toLowerCase();
-    return state.inventory.filter(i => !q || i.item.toLowerCase().includes(q) || i.category?.toLowerCase().includes(q));
-  }, [state.inventory, search]);
-
-  const getStatus = (i) => i.stock === 0 ? 'Out of Stock' : i.stock <= i.reorder ? 'Low Stock' : 'In Stock';
-  const stockPct = (i) => Math.min(100, (i.stock / (i.reorder * 4)) * 100);
-
-  const handleAdjust = (id, delta) => {
-    const item = state.inventory.find(i => i.id === id);
-    const newStock = Math.max(0, item.stock + delta);
-    dispatch({ type: 'ADJUST_STOCK', payload: { id, delta } });
-    if (newStock <= item.reorder && item.stock > item.reorder) {
-      if (state.settings.notifyLowStock) notify('stock', 'Low Stock Alert', `${item.item} is below reorder level`);
-      toast(`${item.item} is now low on stock!`, 'warning');
-    } else {
-      toast(`Stock updated for ${item.item}`, 'success');
-    }
-    setAdjustId(null); setAdjustVal('');
-  };
-
-  return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div><h1 className="text-2xl font-black text-gray-900">Inventory Management</h1><p className="text-gray-400 text-sm mt-1">Track raw materials and supplies</p></div>
-        <button onClick={() => setAddOpen(true)} className="flex items-center space-x-2 bg-black text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-zinc-800 transition-all shadow-sm">
-          <Icon name="Plus" size={18} /><span>Add Item</span>
-        </button>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4">
-        {[
-          { label:'Total Items', val: state.inventory.length, icon:'Package', color:'text-zinc-850 bg-zinc-100' },
-          { label:'Low Stock', val: state.inventory.filter(i => i.stock > 0 && i.stock <= i.reorder).length, icon:'AlertTriangle', color:'text-zinc-900 bg-zinc-200' },
-          { label:'Out of Stock', val: state.inventory.filter(i => i.stock === 0).length, icon:'XCircle', color:'text-zinc-50 bg-zinc-900' },
-        ].map(c => (
-          <div key={c.label} className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 flex items-center space-x-3">
-            <div className={`p-2.5 rounded-xl ${c.color}`}><Icon name={c.icon} size={20} /></div>
-            <div><p className="text-xs text-gray-500 font-medium">{c.label}</p><p className="text-2xl font-black text-gray-900">{c.val}</p></div>
-          </div>
-        ))}
-      </div>
-
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="p-5 border-b border-gray-100 flex items-center space-x-3">
-          <div className="relative flex-1">
-            <Icon name="Search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search inventory..." className="pl-9 pr-4 py-2 w-full border border-gray-200 rounded-xl text-sm focus:border-black focus:ring-2 focus:ring-black/10 transition-all" />
-          </div>
-        </div>
-
-        {loading ? <Skeleton /> : filtered.length === 0 ? <EmptyState icon="Package" title="No items found" subtitle="Add your first inventory item" cta="Add Item" onCta={() => setAddOpen(true)} /> : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
-                  <th className="px-5 py-3.5 text-left font-semibold">Ingredient</th>
-                  <th className="px-5 py-3.5 text-left font-semibold">Stock Level</th>
-                  <th className="px-5 py-3.5 text-left font-semibold">Reorder At</th>
-                  <th className="px-5 py-3.5 text-left font-semibold">Status</th>
-                  <th className="px-5 py-3.5 text-left font-semibold">Adjust</th>
-                  <th className="px-5 py-3.5 text-left font-semibold">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {filtered.map(item => {
-                  const status = getStatus(item);
-                  const pct = stockPct(item);
-                  return (
-                    <tr key={item.id} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="px-5 py-4">
-                        <p className="text-sm font-semibold text-gray-900">{item.item}</p>
-                        <p className="text-xs text-gray-400">{item.category}</p>
-                      </td>
-                      <td className="px-5 py-4 min-w-[160px]">
-                        <p className="text-sm font-bold text-gray-900 mb-1">{item.stock} {item.unit}</p>
-                        <div className="w-32 bg-gray-100 rounded-full h-1.5">
-                          <div className={`h-1.5 rounded-full transition-all duration-500 ${status === 'In Stock' ? 'bg-zinc-900' : status === 'Low Stock' ? 'bg-zinc-500' : 'bg-zinc-300'}`} style={{width:`${pct}%`}} />
-                        </div>
-                      </td>
-                      <td className="px-5 py-4 text-sm text-gray-500">{item.reorder} {item.unit}</td>
-                      <td className="px-5 py-4"><Badge status={status} /></td>
-                      <td className="px-5 py-4">
-                        {adjustId === item.id ? (
-                          <div className="flex items-center space-x-2">
-                            <input type="number" value={adjustVal} onChange={e => setAdjustVal(e.target.value)} placeholder="Qty" className="w-16 px-2 py-1 border border-gray-200 rounded-lg text-sm focus:border-black text-center" />
-                            <button onClick={() => handleAdjust(item.id, Number(adjustVal))} className="px-2 py-1 bg-zinc-900 text-white text-xs rounded-lg">+Add</button>
-                            <button onClick={() => handleAdjust(item.id, -Number(adjustVal))} className="px-2 py-1 bg-zinc-500 text-white text-xs rounded-lg">-Use</button>
-                            <button onClick={() => {setAdjustId(null); setAdjustVal('');}} className="text-gray-400"><Icon name="X" size={14} /></button>
-                          </div>
-                        ) : (
-                          <button onClick={() => setAdjustId(item.id)} className="px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 hover:text-zinc-950 text-zinc-650 text-xs font-semibold rounded-lg transition-colors">Adjust Stock</button>
-                        )}
-                      </td>
-                      <td className="px-5 py-4">
-                        <div className="flex space-x-1">
-                          <button onClick={() => setEditItem(item)} className="p-1.5 text-zinc-700 bg-zinc-100 hover:text-black hover:bg-zinc-200 rounded-lg transition-colors"><Icon name="Pencil" size={14} /></button>
-                          <button onClick={() => setDeleteId(item.id)} className="p-1.5 text-zinc-700 bg-zinc-100 hover:text-black hover:bg-zinc-200 rounded-lg transition-colors"><Icon name="Trash2" size={14} /></button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-
-      <InventoryModal open={addOpen || !!editItem} onClose={() => { setAddOpen(false); setEditItem(null); }} editItem={editItem} />
-      <ConfirmModal open={!!deleteId} onClose={() => setDeleteId(null)} onConfirm={() => { dispatch({ type: 'DELETE_INVENTORY', payload: deleteId }); toast('Inventory item removed', 'info'); }} title="Remove Item" message="Remove this item from inventory?" />
     </div>
   );
 };
@@ -1622,8 +1445,8 @@ const CustomersView = () => {
 // ─── STAFF MODULE ─────────────────────────────────────────────────────────────
 const StaffModal = ({ open, onClose, editStaff = null }) => {
   const { dispatch, toast } = useApp();
-  const [form, setForm] = useState({ name:'', role:'Barista', contact:'', email:'', shift:'Morning' });
-  useEffect(() => { if (editStaff) setForm({ name:editStaff.name, role:editStaff.role, contact:editStaff.contact, email:editStaff.email||'', shift:editStaff.shift }); else setForm({ name:'', role:'Barista', contact:'', email:'', shift:'Morning' }); }, [open, editStaff]);
+  const [form, setForm] = useState({ name:'', role:'Captain', contact:'', outlet:'1', details:'' });
+  useEffect(() => { if (editStaff) setForm({ name:editStaff.name, role:editStaff.role, contact:editStaff.contact, outlet:editStaff.outlet||'1', details:editStaff.details||'' }); else setForm({ name:'', role:'Captain', contact:'', outlet:'1', details:'' }); }, [open, editStaff]);
   const set = (k,v) => setForm(f => ({...f,[k]:v}));
   const handleSubmit = () => {
     if (!form.name || !form.contact) { toast('Name and contact are required', 'error'); return; }
@@ -1637,14 +1460,14 @@ const StaffModal = ({ open, onClose, editStaff = null }) => {
         <Input label="Full Name" required value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Riya Sharma" />
         <div className="grid grid-cols-2 gap-3">
           <Select label="Role" value={form.role} onChange={e => set('role', e.target.value)}>
-            {['Manager','Cashier','Barista','Head Baker','Chef','Waiter','Delivery','Cleaner'].map(r => <option key={r}>{r}</option>)}
+            {['Manager','Assistant Manager','Captain','Waiter','Kitchen Staff'].map(r => <option key={r}>{r}</option>)}
           </Select>
-          <Select label="Shift" value={form.shift} onChange={e => set('shift', e.target.value)}>
-            {['Morning','Afternoon','Evening','Night'].map(s => <option key={s}>{s}</option>)}
+          <Select label="Designated Outlet" value={form.outlet} onChange={e => set('outlet', e.target.value)}>
+            {['1','2','3','4','5','6'].map(o => <option key={o} value={o}>Outlet {o}</option>)}
           </Select>
         </div>
         <Input label="Contact Number" required value={form.contact} onChange={e => set('contact', e.target.value)} placeholder="9800000000" />
-        <Input label="Email" type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="employee@ff.com" />
+        <Input label="Basic Details" value={form.details} onChange={e => set('details', e.target.value)} placeholder="e.g. Any special notes..." />
         <div className="flex justify-end space-x-3">
           <button onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50">Cancel</button>
           <button onClick={handleSubmit} className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-zinc-800">{editStaff ? 'Save Changes' : 'Add Employee'}</button>
@@ -1657,7 +1480,7 @@ const StaffModal = ({ open, onClose, editStaff = null }) => {
 const StaffView = () => {
   const { state, dispatch, toast } = useApp();
   const [search, setSearch] = useState('');
-  const [shiftFilter, setShiftFilter] = useState('All');
+  const [outletFilter, setOutletFilter] = useState('All');
   const [addOpen, setAddOpen] = useState(false);
   const [editStaff, setEditStaff] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -1666,11 +1489,11 @@ const StaffView = () => {
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
-    return state.staff.filter(s => (shiftFilter === 'All' || s.shift === shiftFilter) && (!q || s.name.toLowerCase().includes(q) || s.role.toLowerCase().includes(q)));
-  }, [state.staff, search, shiftFilter]);
+    return state.staff.filter(s => (outletFilter === 'All' || s.outlet === outletFilter) && (!q || s.name.toLowerCase().includes(q) || s.role.toLowerCase().includes(q)));
+  }, [state.staff, search, outletFilter]);
 
   const attColors = { Present: 'bg-zinc-950 border border-zinc-500', Absent: 'bg-zinc-300', 'Half Day': 'bg-zinc-600' };
-  const roleIcons = { Manager:'Briefcase', Cashier:'CreditCard', Barista:'Coffee', 'Head Baker':'ChefHat', Chef:'ChefHat', Waiter:'Utensils', Delivery:'Truck', Cleaner:'Sparkles' };
+  const roleIcons = { Manager:'Briefcase', 'Assistant Manager':'UserCheck', Captain:'Navigation', Waiter:'Utensils', 'Kitchen Staff':'ChefHat' };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -1686,8 +1509,8 @@ const StaffView = () => {
           <Icon name="Search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search staff..." className="pl-9 pr-4 py-2 w-full border border-gray-200 rounded-xl text-sm focus:border-black focus:ring-2 focus:ring-black/10 transition-all" />
         </div>
-        <div className="flex space-x-2">
-          {['All','Morning','Evening','Night'].map(s => <button key={s} onClick={() => setShiftFilter(s)} className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${shiftFilter===s ? 'bg-black text-white shadow-sm' : 'bg-white border border-gray-200 text-gray-600 hover:border-zinc-400'}`}>{s}</button>)}
+        <div className="flex space-x-2 overflow-x-auto">
+          {['All','1','2','3','4','5','6'].map(o => <button key={o} onClick={() => setOutletFilter(o)} className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-semibold transition-all ${outletFilter===o ? 'bg-black text-white shadow-sm' : 'bg-white border border-gray-200 text-gray-600 hover:border-zinc-400'}`}>{o === 'All' ? 'All' : `Outlet ${o}`}</button>)}
         </div>
       </div>
 
@@ -1714,10 +1537,15 @@ const StaffView = () => {
                     <button onClick={() => setDeleteId(member.id)} className="p-1.5 text-zinc-700 bg-zinc-100 hover:text-black hover:bg-zinc-200 rounded-lg transition-colors"><Icon name="Trash2" size={14} /></button>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3 text-xs text-gray-500 mb-4">
-                  <div className="flex items-center space-x-1.5"><Icon name="Clock" size={12} className="text-gray-400" /><span>{member.shift} Shift</span></div>
+                <div className="grid grid-cols-2 gap-3 text-xs text-gray-500 mb-3">
+                  <div className="flex items-center space-x-1.5"><Icon name="Store" size={12} className="text-gray-400" /><span>Outlet {member.outlet || '1'}</span></div>
                   <div className="flex items-center space-x-1.5"><Icon name="Phone" size={12} className="text-gray-400" /><span>{member.contact}</span></div>
                 </div>
+                {member.details && (
+                  <div className="text-xs text-gray-600 mb-4 bg-gray-50 p-2 rounded-lg border border-gray-100">
+                    {member.details}
+                  </div>
+                )}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-3 mt-1">
                   <div className="text-xs text-gray-500 font-medium">
                     {member.clockInTime ? (
@@ -1866,7 +1694,8 @@ const ReportsView = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => { setLoading(true); const t = setTimeout(() => setLoading(false), 600); return () => clearTimeout(t); }, [range]);
 
-  const orders = state.orders;
+  const isAll = state.activeOutlet === 'All';
+  const orders = isAll ? state.orders : state.orders.filter(o => o.outlet === state.activeOutlet);
   const delivered = orders.filter(o => o.status === 'Delivered');
   const revenue = delivered.reduce((s, o) => s + o.total, 0);
   const avgOrder = delivered.length ? revenue / delivered.length : 0;
@@ -2095,7 +1924,6 @@ const SettingsView = () => {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
         <h3 className="font-bold text-gray-900 text-base border-b border-gray-100 pb-3">Notifications</h3>
         <Toggle label="New Order Alerts" desc="Get notified when a new order is placed" k="notifyNewOrder" />
-        <Toggle label="Low Stock Alerts" desc="Get notified when inventory drops below reorder level" k="notifyLowStock" />
         <Toggle label="New Customer Alerts" desc="Get notified when a new customer registers" k="notifyNewCustomer" />
       </div>
 
@@ -2144,7 +1972,6 @@ const DemoView = () => {
   const actions = [
     { key:'orders20',   icon:'ShoppingBag',  label:'Generate Today\'s Orders',  desc:'Creates 20 random orders', color:'from-zinc-900 to-black border border-zinc-800', fn: () => genOrders(20),  msg: '20 orders generated!' },
     { key:'rush',       icon:'Zap',          label:'Simulate Rush Hour',        desc:'Creates 50 orders — peak hour simulation', color:'from-zinc-800 to-zinc-900 border border-zinc-700', fn: () => genOrders(50), msg: '50 orders added!' },
-    { key:'restock',    icon:'RefreshCw',    label:'Restock All Inventory',     desc:'Fills all ingredients to reorder levels', color:'from-zinc-700 to-zinc-800 border border-zinc-750', fn: () => dispatch({ type: 'RESTOCK_ALL' }), msg: 'Inventory restocked!' },
     { key:'customers',  icon:'Users',        label:'Generate Customers',        desc:'Adds 10 new customer profiles', color:'from-zinc-600 to-zinc-700 border border-zinc-650', fn: genCustomers,             msg: '10 customers added!' },
   ];
 
@@ -2180,7 +2007,6 @@ const DemoView = () => {
           {[
             { label:'Orders',    val: state.orders.length },
             { label:'Menu Items', val: state.menuItems.length },
-            { label:'Inventory', val: state.inventory.length },
             { label:'Customers', val: state.customers.length },
             { label:'Staff',     val: state.staff.length },
           ].map(s => (
@@ -2219,15 +2045,14 @@ const DashboardView = ({ onNavigate }) => {
     { title: 'Low Stock Alerts', value: String(stats.lowStock), change: stats.lowStock > 0 ? 'Action needed' : 'All good', icon: 'AlertTriangle', color: stats.lowStock > 0 ? 'from-black to-zinc-900' : 'from-zinc-500 to-zinc-650' },
   ];
 
-  const recentOrders = state.orders.slice(0, 6);
+  const isAll = state.activeOutlet === 'All';
+  const recentOrders = state.orders.filter(o => isAll || o.outlet === state.activeOutlet).slice(0, 6);
   const statusFlow = [
     { label:'Pending',   count: stats.pending,   icon:'Clock', color:'bg-zinc-50 text-zinc-500 border border-zinc-200' },
     { label:'Preparing', count: stats.preparing, icon:'ChefHat', color:'bg-zinc-50 text-zinc-600 border border-zinc-200' },
     { label:'Ready',     count: stats.ready,     icon:'BellRing', color:'bg-zinc-100 text-zinc-750 border border-zinc-250' },
     { label:'Delivered', count: stats.delivered, icon:'CheckCircle2', color:'bg-zinc-200 text-zinc-900 border border-zinc-350' },
   ];
-
-  const lowStockItems = state.inventory.filter(i => i.stock <= i.reorder);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -2237,18 +2062,6 @@ const DashboardView = ({ onNavigate }) => {
           <p className="text-gray-400 text-sm mt-1">Here's what's happening at {state.settings.cafeName} today, {today()}.</p>
         </div>
       </div>
-
-      {lowStockItems.length > 0 && (
-        <div className="bg-red-500 text-white p-4 rounded-2xl shadow-lg flex items-start space-x-3 animate-fade-in">
-          <div className="mt-0.5"><Icon name="AlertTriangle" size={24} /></div>
-          <div>
-            <h3 className="font-bold text-lg">Critical Low Stock Alert</h3>
-            <p className="text-sm text-red-100 font-medium mt-1">
-              {lowStockItems.map(i => i.item).join(', ')} {lowStockItems.length === 1 ? 'is' : 'are'} critically low and need immediate restocking!
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* KPI Cards */}
       {loading ? (
@@ -2393,6 +2206,155 @@ const DashboardView = ({ onNavigate }) => {
   );
 };
 
+// ─── RESERVATIONS MODULE ───────────────────────────────────────────────────────
+const ReservationModal = ({ open, onClose, editReservation = null }) => {
+  const { state, dispatch, toast } = useApp();
+  const [form, setForm] = useState({ customerName: '', phone: '', date: new Date().toISOString().split('T')[0], time: '19:00', guests: 2, outlet: state.activeOutlet === 'All' ? '1' : state.activeOutlet, tableNo: '', status: 'Pending', notes: '' });
+
+  useEffect(() => {
+    if (editReservation) setForm(editReservation);
+    else setForm({ customerName: '', phone: '', date: new Date().toISOString().split('T')[0], time: '19:00', guests: 2, outlet: state.activeOutlet === 'All' ? '1' : state.activeOutlet, tableNo: '', status: 'Pending', notes: '' });
+  }, [open, editReservation]);
+
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  const handleSubmit = () => {
+    if (!form.customerName || !form.phone || !form.date || !form.time || !form.guests) {
+      toast('Please fill all required fields', 'error'); return;
+    }
+    if (editReservation) {
+      dispatch({ type: 'UPDATE_RESERVATION', payload: form });
+      toast('Reservation updated', 'success');
+    } else {
+      dispatch({ type: 'ADD_RESERVATION', payload: { ...form, id: 'r' + Date.now() } });
+      toast('Reservation added', 'success');
+    }
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title={editReservation ? 'Edit Reservation' : 'New Reservation'} size="md">
+      <div className="p-6 space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <Input label="Customer Name" required value={form.customerName} onChange={e => set('customerName', e.target.value)} />
+          <Input label="Phone Number" required value={form.phone} onChange={e => set('phone', e.target.value)} />
+          <Input label="Date" type="date" required value={form.date} onChange={e => set('date', e.target.value)} />
+          <Input label="Time" type="time" required value={form.time} onChange={e => set('time', e.target.value)} />
+          <Input label="Guests" type="number" min="1" required value={form.guests} onChange={e => set('guests', e.target.value)} />
+          <Select label="Status" value={form.status} onChange={e => set('status', e.target.value)}>
+            {['Pending', 'Confirmed', 'Seated', 'Cancelled'].map(s => <option key={s} value={s}>{s}</option>)}
+          </Select>
+          <Select label="Outlet" value={form.outlet} onChange={e => set('outlet', e.target.value)}>
+            {[1, 2, 3, 4, 5, 6].map(o => <option key={o} value={o.toString()}>Outlet {o}</option>)}
+          </Select>
+          <Input label="Table No (Optional)" value={form.tableNo} onChange={e => set('tableNo', e.target.value)} />
+        </div>
+        <Input label="Special Notes" value={form.notes} onChange={e => set('notes', e.target.value)} />
+        <div className="flex justify-end space-x-3 pt-2">
+          <button onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50">Cancel</button>
+          <button onClick={handleSubmit} className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-zinc-800">Save Reservation</button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+const ReservationsView = () => {
+  const { state, dispatch, toast } = useApp();
+  const [search, setSearch] = useState('');
+  const [filterStatus, setFilterStatus] = useState('All');
+  const [addOpen, setAddOpen] = useState(false);
+  const [editReservation, setEditReservation] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
+
+  const filtered = useMemo(() => {
+    let res = state.reservations.filter(r => state.activeOutlet === 'All' || r.outlet === state.activeOutlet);
+    if (filterStatus !== 'All') res = res.filter(r => r.status === filterStatus);
+    if (search) {
+      const q = search.toLowerCase();
+      res = res.filter(r => r.customerName.toLowerCase().includes(q) || r.phone.includes(q) || r.tableNo.toLowerCase().includes(q));
+    }
+    return res.sort((a,b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+  }, [state.reservations, state.activeOutlet, filterStatus, search]);
+
+  const statusColors = { Pending:'bg-yellow-100 text-yellow-800', Confirmed:'bg-blue-100 text-blue-800', Seated:'bg-green-100 text-green-800', Cancelled:'bg-red-100 text-red-800' };
+
+  return (
+    <div className="space-y-6 animate-fade-in">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-black text-gray-900">Table Reservations</h1>
+          <p className="text-gray-400 text-sm mt-1">Manage bookings and table assignments</p>
+        </div>
+        <button onClick={() => setAddOpen(true)} className="flex items-center space-x-2 bg-black text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-zinc-800 transition-all shadow-sm">
+          <Icon name="Plus" size={18} /><span>Add Reservation</span>
+        </button>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Icon name="Search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search name, phone or table..." className="pl-9 pr-4 py-2 w-full border border-gray-200 rounded-xl text-sm focus:border-black focus:ring-2 focus:ring-black/10 transition-all" />
+        </div>
+        <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-4 py-2 border border-gray-200 rounded-xl text-sm bg-white font-medium outline-none">
+          <option value="All">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Seated">Seated</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      {filtered.length === 0 ? (
+        <EmptyState icon="Calendar" title="No reservations found" subtitle="No bookings match your current filters." cta="Add Reservation" onCta={() => setAddOpen(true)} />
+      ) : (
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+          <table className="w-full text-left border-collapse min-w-[800px]">
+            <thead>
+              <tr className="bg-zinc-50 border-b border-gray-100">
+                <th className="px-5 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Date & Time</th>
+                <th className="px-5 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Customer</th>
+                <th className="px-5 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Guests</th>
+                <th className="px-5 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Table</th>
+                <th className="px-5 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-5 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filtered.map(r => (
+                <tr key={r.id} className="hover:bg-gray-50/50 transition-colors">
+                  <td className="px-5 py-4">
+                    <div className="font-bold text-gray-900">{fmtDate(r.date)}</div>
+                    <div className="text-sm text-gray-500">{r.time}</div>
+                  </td>
+                  <td className="px-5 py-4">
+                    <div className="font-bold text-gray-900">{r.customerName}</div>
+                    <div className="text-sm text-gray-500">{r.phone}</div>
+                  </td>
+                  <td className="px-5 py-4 font-bold">{r.guests} <Icon name="Users" size={14} className="inline ml-1 text-gray-400" /></td>
+                  <td className="px-5 py-4 font-bold text-gray-700">{r.tableNo || '-'}</td>
+                  <td className="px-5 py-4">
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${statusColors[r.status]}`}>{r.status}</span>
+                  </td>
+                  <td className="px-5 py-4 text-right">
+                    <div className="flex justify-end space-x-2">
+                      <button onClick={() => setEditReservation(r)} className="p-1.5 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors"><Icon name="Pencil" size={16} /></button>
+                      <button onClick={() => setDeleteId(r.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Icon name="Trash2" size={16} /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <ReservationModal open={addOpen || !!editReservation} onClose={() => { setAddOpen(false); setEditReservation(null); }} editReservation={editReservation} />
+      <ConfirmModal open={!!deleteId} onClose={() => setDeleteId(null)} onConfirm={() => { dispatch({ type: 'DELETE_RESERVATION', payload: deleteId }); toast('Reservation deleted', 'info'); }} title="Delete Reservation" message="Are you sure you want to delete this reservation?" />
+    </div>
+  );
+};
+
 // ─── SIDEBAR ──────────────────────────────────────────────────────────────────
 const Sidebar = ({ active, onNavigate, collapsed, onToggle }) => {
   const { state } = useApp();
@@ -2403,7 +2365,8 @@ const Sidebar = ({ active, onNavigate, collapsed, onToggle }) => {
     { tab:'Orders',     icon:'ShoppingBag',     label:'Orders',    badge: state.orders.filter(o=>o.status==='Pending').length },
     { tab:'Kitchen',    icon:'ChefHat',         label:'Kitchen KDS', badge: state.orders.filter(o=>o.status==='Preparing').length, badgeColor: 'bg-red-500 text-white' },
     { tab:'Menu',       icon:'UtensilsCrossed', label:'Menu' },
-    { tab:'Inventory',  icon:'Package',         label:'Inventory', badge: state.inventory.filter(i=>i.stock<=i.reorder).length, badgeColor:'bg-zinc-800 border border-zinc-700' },
+    { tab:'Reservations',icon:'Calendar',       label:'Reservations' },
+
     { tab:'Customers',  icon:'Users',           label:'Customers' },
     { tab:'Staff',      icon:'UserSquare2',     label:'Staff' },
     { tab:'Reports',    icon:'BarChart3',       label:'Reports' },
@@ -2465,13 +2428,14 @@ const Sidebar = ({ active, onNavigate, collapsed, onToggle }) => {
 
 // ─── HEADER ────────────────────────────────────────────────────────────────────
 const Header = ({ activeTab, onNavigate, sidebarCollapsed, onToggleSidebar }) => {
-  const { state } = useApp();
+  const { state, dispatch } = useApp();
   const [notifOpen, setNotifOpen] = useState(false);
   const unread = state.notifications.filter(n => !n.read).length;
 
   const tabTitles = {
     Dashboard: 'Dashboard', Orders: 'Order Management', Menu: 'Menu Management',
-    Inventory: 'Inventory', Customers: 'Customers', Staff: 'Staff Management',
+    Reservations: 'Table Reservations',
+    Customers: 'Customers', Staff: 'Staff Management',
     Reports: 'Reports & Analytics', Settings: 'Settings', Demo: 'Demo Mode'
   };
 
@@ -2486,12 +2450,23 @@ const Header = ({ activeTab, onNavigate, sidebarCollapsed, onToggleSidebar }) =>
         </div>
       </div>
 
-      {/* Centered App Name */}
-      <div className="absolute inset-x-0 flex justify-center items-center h-full pointer-events-none">
-        <span className="text-xl font-black text-black tracking-wider uppercase">ToastMaster</span>
+      {/* App Name */}
+      <div className="hidden lg:flex flex-1 justify-center items-center pointer-events-none min-w-0 mx-4">
+        <span className="text-xl font-black text-black tracking-wider uppercase truncate">ToastMaster</span>
       </div>
 
       <div className="flex items-center space-x-3">
+        <div className="hidden md:flex items-center bg-zinc-100 rounded-xl px-3 py-1.5 z-10 relative mr-1">
+          <Icon name="Store" size={16} className="text-zinc-500 mr-2" />
+          <select 
+            value={state.activeOutlet} 
+            onChange={(e) => dispatch({ type: 'SET_OUTLET', payload: e.target.value })}
+            className="bg-transparent border-none outline-none text-sm font-bold text-zinc-900 cursor-pointer pr-2"
+          >
+            <option value="All">All Outlets</option>
+            {[1, 2, 3, 4, 5, 6].map(o => <option key={o} value={o.toString()}>Outlet {o}</option>)}
+          </select>
+        </div>
         <div className="hidden md:block relative z-10">
           <GlobalSearch onNavigate={onNavigate} />
         </div>
@@ -2538,7 +2513,8 @@ function App() {
       case 'Orders':     return <OrdersView />;
       case 'Kitchen':    return <KitchenView />;
       case 'Menu':       return <MenuView />;
-      case 'Inventory':  return <InventoryView />;
+      case 'Reservations': return <ReservationsView />;
+
       case 'Customers':  return <CustomersView />;
       case 'Staff':      return <StaffView />;
       case 'Reports':    return <ReportsView />;
