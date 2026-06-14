@@ -1,105 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ToastMaster — Café & Bakery Management System</title>
-  <meta name="description" content="ToastMaster is a modern all-in-one café and bakery management system. Manage orders, menu, inventory, staff, customers and reports from one beautiful dashboard.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
-  <script src="https://unpkg.com/recharts@2.1.12/umd/Recharts.js"></script>
-  <script>window.react = window.React;</script>
-  <script src="https://unpkg.com/lucide-react@0.292.0/dist/umd/lucide-react.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-/* Professional Design System */
-:root {
-  --font-family: 'Inter', sans-serif;
-  --color-bg-light: #f4f6f8;
-  --color-bg-dark: #1a1a1a;
-  --color-surface-light: rgba(255,255,255,0.8);
-  --color-surface-dark: rgba(0,0,0,0.6);
-  --color-primary: #0d6efd; /* blue accent */
-  --color-primary-dark: #0a58ca;
-  --color-text-light: #1f2937;
-  --color-text-dark: #e5e7eb;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: var(--color-bg-dark);
-    --color-surface: var(--color-surface-dark);
-    --color-text: var(--color-text-dark);
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-bg: var(--color-bg-light);
-    --color-surface: var(--color-surface-light);
-    --color-text: var(--color-text-light);
-  }
-}
-
-*, *::before, *::after { box-sizing: border-box; }
-body { font-family: var(--font-family); margin: 0; background: var(--color-bg); color: var(--color-text); }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
-
-/* Glassmorphism utility */
-.glass { background: var(--color-surface); backdrop-filter: blur(12px); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
-
-/* Animations */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes slideRight { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-@keyframes toastIn { from { opacity: 0; transform: translateX(100%) scale(0.9); } to { opacity: 1; transform: translateX(0) scale(1); } }
-@keyframes toastOut { from { opacity: 1; transform: translateX(0) scale(1); } to { opacity: 0; transform: translateX(100%) scale(0.9); } }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-@keyframes badgePop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
-
-/* Animation helpers */
-.animate-fade-in { animation: fadeIn 0.35s ease both; }
-.animate-toast-in { animation: toastIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275) both; }
-.animate-toast-out { animation: toastOut 0.25s ease both; }
-.animate-spin { animation: spin 0.8s linear infinite; }
-.animate-pulse { animation: pulse 1.5s ease-in-out infinite; }
-.badge-pop { animation: badgePop 0.3s ease; }
-.skeleton { background: linear-gradient(90deg, #e5e7eb 25%, #cbd5e1 50%, #e5e7eb 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 6px; }
-.modal-overlay { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-.sidebar-item { transition: all 0.2s ease; }
-.sidebar-item:hover { transform: translateX(2px); }
-.card-hover { transition: all 0.2s ease; }
-.card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
-input, select, textarea { outline: none; }
-input:focus, select:focus, textarea:focus { border-color: var(--color-primary); box-shadow: 0 0 0 2px rgba(13,110,253,0.15); }
-.gradient-amber { background: linear-gradient(135deg, #18181b, #09090b); }
-.gradient-blue { background: linear-gradient(135deg, #3f3f46, #27272a); }
-.gradient-green { background: linear-gradient(135deg, #27272a, #18181b); }
-.gradient-red { background: linear-gradient(135deg, #09090b, #000000); }
-.gradient-purple { background: linear-gradient(135deg, #71717a, #52525b); }
-.nav-indicator { position: absolute; left: 0; width: 3px; height: 100%; background: var(--color-primary); border-radius: 0 3px 3px 0; }
-  @media print {
-    body * { visibility: hidden !important; }
-    #print-invoice, #print-invoice * { visibility: visible !important; }
-    #print-invoice { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; margin: 0 !important; padding: 20px !important; background: white !important; box-shadow: none !important; border: none !important; }
-    .no-print, .modal-overlay { display: none !important; }
-  }
-  </style>
-</head>
-<body>
-<div id="root"></div>
-
-<script type="text/babel">
 const { useState, useEffect, useReducer, useContext, createContext, useMemo, useCallback, useRef } = React;
 
 // ─── ICONS (Safe Wrapper) ────────────────────────────────────────────────────
@@ -437,26 +336,15 @@ const InvoiceModal = ({ open, onClose, order, storeName = 'ToastMaster Café & B
     p.document.close();
   };
   const handleWhatsApp = () => {
-    let msg = `*${storeName}*
-`;
-    msg += `Hello ${order.customer},
-Thank you for your order!
-
-`;
-    msg += `*Invoice #${order.id}*
-`;
+    let msg = `*${storeName}*\n`;
+    msg += `Hello ${order.customer},\nThank you for your order!\n\n`;
+    msg += `*Invoice #${order.id}*\n`;
     order.items.forEach(i => {
-      msg += `${i.qty}x ${i.name} - ₹${i.price * i.qty}
-`;
+      msg += `${i.qty}x ${i.name} - ₹${i.price * i.qty}\n`;
     });
-    msg += `
-Subtotal: ₹${order.subtotal}
-`;
-    msg += `GST: ₹${order.gst}
-`;
-    msg += `*Total: ₹${order.total}*
-
-`;
+    msg += `\nSubtotal: ₹${order.subtotal}\n`;
+    msg += `GST: ₹${order.gst}\n`;
+    msg += `*Total: ₹${order.total}*\n\n`;
     msg += `Thank you for visiting!`;
     const phoneObj = order.customerPhone ? order.customerPhone.replace(/[^0-9]/g, '') : '';
     window.open(`https://wa.me/${phoneObj}?text=${encodeURIComponent(msg)}`, '_blank');
@@ -1256,7 +1144,6 @@ const MenuView = () => {
   const [cat, setCat] = useState('All');
   const [search, setSearch] = useState('');
   const [addOpen, setAddOpen] = useState(false);
-  const [broadcastOpen, setBroadcastOpen] = useState(false);
   const [editItem, setEditItem] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -1360,7 +1247,6 @@ const CustomerModal = ({ open, onClose, editCustomer = null }) => {
 };
 
 const WhatsAppBroadcastModal = ({ open, onClose, customers }) => {
-  const { toast } = useApp();
   const [message, setMessage] = React.useState("Hi {{name}}, we have a special offer for you! Visit FlavourFall today.");
   const [sending, setSending] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
@@ -1382,7 +1268,7 @@ const WhatsAppBroadcastModal = ({ open, onClose, customers }) => {
           setTimeout(() => {
             setSending(false);
             onClose();
-            toast(`Successfully sent message to ${total} customers!`, 'success');
+            // Show toast using a global or just close
           }, 1500);
           return total;
         }
@@ -1443,7 +1329,6 @@ const CustomersView = () => {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('name');
   const [addOpen, setAddOpen] = useState(false);
-  const [broadcastOpen, setBroadcastOpen] = useState(false);
   const [editCustomer, setEditCustomer] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [page, setPage] = useState(1);
@@ -2677,28 +2562,6 @@ const Header = ({ activeTab, onNavigate, sidebarCollapsed, onToggleSidebar }) =>
   );
 };
 
-class ErrorBoundary extends React.Component {
-  constructor(props) { super(props); this.state = { hasError: false, error: null }; }
-  static getDerivedStateFromError(error) { return { hasError: true, error }; }
-  componentDidCatch(error, errorInfo) { console.error("ErrorBoundary caught:", error, errorInfo); }
-  render() {
-    if (this.state.hasError) return (
-      <div style={{ padding: '40px', textAlign: 'center', color: '#DC2626', fontFamily: 'sans-serif' }}>
-        <h2>Application Error</h2>
-        <pre style={{ background: '#FEF2F2', padding: '12px', borderRadius: '8px', textAlign: 'left', fontSize: '12px', whiteSpace: 'pre-wrap' }}>
-          {this.state.error && this.state.error.stack}
-        </pre>
-        <button onClick={() => { localStorage.removeItem('ff_tab'); window.location.reload(); }} style={{ marginTop: '20px', padding: '10px 20px', background: 'black', color: 'white', borderRadius: '8px', cursor: 'pointer' }}>
-          Reset App State
-        </button>
-      </div>
-    );
-    return this.props.children;
-  }
-}
-
-
-
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 function App() {
   const [activeTab, setActiveTab] = useState(() => getLS('ff_tab', 'Dashboard'));
@@ -2715,9 +2578,7 @@ function App() {
 
   return (
     <AppProvider>
-      <ErrorBoundary>
-        <AppContent activeTab={activeTab} collapsed={collapsed} navigate={navigate} toggleSidebar={toggleSidebar} />
-      </ErrorBoundary>
+      <AppContent activeTab={activeTab} collapsed={collapsed} navigate={navigate} toggleSidebar={toggleSidebar} />
     </AppProvider>
   );
 }
@@ -2782,6 +2643,3 @@ try {
   console.error('ToastMaster render error:', err);
   document.body.innerHTML = `<div style="font-family:sans-serif;padding:40px;text-align:center;color:#DC2626"><h2>Failed to load ToastMaster</h2><pre style="background:#FEF2F2;padding:12px;border-radius:8px;text-align:left;font-size:12px">${err?.stack || err}</pre></div>`;
 }
-</script>
-</body>
-</html>
