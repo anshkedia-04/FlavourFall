@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlavourFall - Taste the Magic</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#FF6B6B',
+            dark: '#1A1A2E',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #FAFAFA; color: #111827; margin: 0; scroll-behavior: smooth; }
+    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); }
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+    }
+  </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const SEED_MENU = [
+  { id: 'm1', name: 'Paneer Tikka', category: 'Appetizers', price: 280, photo: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=500&q=80', description: 'Cottage cheese marinated in yogurt and spices' },
+  { id: 'm2', name: 'Spring Rolls', category: 'Appetizers', price: 220, photo: 'https://images.unsplash.com/photo-1593504049359-74330189a345?auto=format&fit=crop&w=500&q=80', description: 'Crispy fried rolls with vegetable filling' },
+  { id: 'm3', name: 'Butter Chicken', category: 'Indian', price: 450, photo: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=500&q=80', description: 'Tender chicken in a rich, creamy tomato gravy' },
+  { id: 'm4', name: 'Dal Makhani', category: 'Indian', price: 320, photo: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=500&q=80', description: 'Slow-cooked black lentils with butter and cream' },
+  { id: 'm6', name: 'Hakka Noodles', category: 'Chinese', price: 260, photo: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=500&q=80', description: 'Wok-tossed noodles with vegetables' },
+  { id: 'm8', name: 'Margherita Pizza', category: 'Italian', price: 390, photo: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=500&q=80', description: 'Classic tomato and fresh mozzarella pizza' },
+  { id: 'm10', name: 'Grilled Salmon', category: 'Main Course', price: 850, photo: 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=500&q=80', description: 'Fresh salmon with asparagus and lemon butter' },
+  { id: 'm13', name: 'Mango Lassi', category: 'Beverages', price: 150, photo: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=500&q=80', description: 'Sweet yogurt drink blended with mango' },
+];
+
+const OUTLETS = [
+  { id: 'o1', name: 'FlavourFall Downtown', address: '123 Main Street, City Center', phone: '+91 98765 43210', hours: '11:00 AM - 11:00 PM', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80' },
+  { id: 'o2', name: 'FlavourFall Suburbs', address: '45 Green Avenue, Westside', phone: '+91 98765 43211', hours: '12:00 PM - 10:30 PM', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80' }
+];
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState('Home');
+  const [reservation, setReservation] = useState({ date: '', time: '', guests: 2, name: '', phone: '' });
+  const [resStatus, setResStatus] = useState('idle');
+  const [eventReq, setEventReq] = useState({ date: '', time: '', guests: '', description: '', name: '', phone: '' });
+  const [eventStatus, setEventStatus] = useState('idle');
+
+  const categories = [...new Set(SEED_MENU.map(m => m.category))];
+  const [activeCategory, setActiveCategory] = useState(categories[0]);
+
+  const handleReserve = (e) => {
+    e.preventDefault();
+    setResStatus('submitting');
+    setTimeout(() => {
+      setResStatus('success');
+      setTimeout(() => {
+        setReservation({ date: '', time: '', guests: 2, name: '', phone: '' });
+        setResStatus('idle');
+      }, 4000);
+    }, 1500);
+  };
+
+  const handleEvent = (e) => {
+    e.preventDefault();
+    setEventStatus('submitting');
+    setTimeout(() => {
+      setEventStatus('success');
+      setTimeout(() => {
+        setEventReq({ date: '', time: '', guests: '', description: '', name: '', phone: '' });
+        setEventStatus('idle');
+      }, 4000);
+    }, 1500);
+  };
+
+  const navLinks = ['Home', 'Menu', 'Outlets', 'Events', 'Reserve'];
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <nav className="fixed top-0 w-full z-50 glass shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-2 cursor-pointer" onClick={() => setActiveTab('Home')}>
+              <div className="w-10 h-10 bg-brand rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand/30">
+                FF
+              </div>
+              <span className="text-xl font-extrabold tracking-tight text-gray-900">Flavour<span className="text-brand">Fall</span></span>
+            </div>
+            <div className="hidden md:flex space-x-8">
+              {navLinks.map(link => (
+                <button 
+                  key={link} 
+                  onClick={() => setActiveTab(link)}
+                  className={`text-sm font-semibold transition-colors duration-200 ${activeTab === link ? 'text-brand border-b-2 border-brand pb-1' : 'text-gray-600 hover:text-gray-900'}`}
+                >
+                  {link}
+                </button>
+              ))}
+            </div>
+            <div className="md:hidden">
+              <button className="text-gray-600" onClick={() => alert('Menu toggled (mobile support incoming)')}>☰</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main className="flex-1 pt-20">
+        
+        {activeTab === 'Home' && (
+          <div className="animate-fade-in">
+            <div className="hero-bg h-[600px] flex items-center justify-center text-center px-4">
+              <div className="max-w-3xl space-y-6">
+                <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight drop-shadow-xl">
+                  Experience <span className="text-brand">Culinary Magic</span>
+                </h1>
+                <p className="text-lg md:text-2xl text-gray-200 font-light drop-shadow-md">
+                  Discover a world of flavors curated by our master chefs. FlavourFall brings you the finest ingredients and unforgettable dining experiences.
+                </p>
+                <div className="pt-8 flex justify-center space-x-4">
+                  <button onClick={() => setActiveTab('Menu')} className="px-8 py-4 bg-brand text-white font-bold rounded-full shadow-lg shadow-brand/40 hover:bg-[#ff5252] transition-all hover:-translate-y-1">
+                    Explore Menu
+                  </button>
+                  <button onClick={() => setActiveTab('Reserve')} className="px-8 py-4 bg-white text-gray-900 font-bold rounded-full shadow-lg hover:bg-gray-50 transition-all hover:-translate-y-1">
+                    Book a Table
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="py-20 bg-white">
+              <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                <div className="space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl">🌿</div>
+                  <h3 className="text-xl font-bold">Fresh Ingredients</h3>
+                  <p className="text-gray-500">We source only the finest, locally-grown ingredients for every dish.</p>
+                </div>
+                <div className="space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl">👨‍🍳</div>
+                  <h3 className="text-xl font-bold">Master Chefs</h3>
+                  <p className="text-gray-500">Our recipes are crafted by chefs with decades of fine dining experience.</p>
+                </div>
+                <div className="space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl">🍷</div>
+                  <h3 className="text-xl font-bold">Perfect Ambience</h3>
+                  <p className="text-gray-500">Enjoy your meal in a beautifully designed, relaxing environment.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'Menu' && (
+          <div className="py-12 px-6 max-w-7xl mx-auto animate-fade-in">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Our Menu</h2>
+              <p className="text-gray-500 max-w-2xl mx-auto">Explore our carefully curated selection of dishes designed to delight your taste buds.</p>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-2 mb-12">
+              {categories.map(cat => (
+                <button 
+                  key={cat} 
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-6 py-2 rounded-full font-medium transition-all ${activeCategory === cat ? 'bg-brand text-white shadow-md shadow-brand/30' : 'bg-white text-gray-600 border border-gray-200 hover:border-brand hover:text-brand'}`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {SEED_MENU.filter(m => m.category === activeCategory).map(item => (
+                <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
+                  <div className="h-48 overflow-hidden">
+                    <img src={item.photo} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
+                      <span className="font-bold text-brand bg-brand/10 px-3 py-1 rounded-full text-sm">₹{item.price}</span>
+                    </div>
+                    <p className="text-gray-500 text-sm">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'Outlets' && (
+          <div className="py-12 px-6 max-w-7xl mx-auto animate-fade-in">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Our Locations</h2>
+              <p className="text-gray-500 max-w-2xl mx-auto">Visit us at any of our beautiful outlets across the city.</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {OUTLETS.map(outlet => (
+                <div key={outlet.id} className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex flex-col md:flex-row group hover:shadow-xl transition-shadow">
+                  <div className="md:w-2/5 h-64 md:h-auto overflow-hidden">
+                    <img src={outlet.image} alt={outlet.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  </div>
+                  <div className="p-8 md:w-3/5 flex flex-col justify-center space-y-4">
+                    <h3 className="text-2xl font-bold text-gray-900">{outlet.name}</h3>
+                    <div className="space-y-3 text-gray-600">
+                      <p className="flex items-start">
+                        <span className="mr-3 mt-1 text-brand">📍</span>
+                        <span>{outlet.address}</span>
+                      </p>
+                      <p className="flex items-center">
+                        <span className="mr-3 text-brand">📞</span>
+                        <span>{outlet.phone}</span>
+                      </p>
+                      <p className="flex items-center">
+                        <span className="mr-3 text-brand">⏰</span>
+                        <span>{outlet.hours}</span>
+                      </p>
+                    </div>
+                    <div className="pt-4 flex space-x-3">
+                      <button className="flex-1 py-2.5 bg-gray-900 text-white font-medium rounded-xl hover:bg-gray-800 transition-colors">Call Now</button>
+                      <button className="flex-1 py-2.5 bg-brand/10 text-brand font-medium rounded-xl hover:bg-brand/20 transition-colors">Directions</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'Events' && (
+          <div className="py-12 px-6 max-w-7xl mx-auto animate-fade-in flex justify-center">
+            <div className="w-full max-w-3xl bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-indigo-900 to-purple-900 text-white p-8 text-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')] bg-cover bg-center"></div>
+                <div className="relative z-10">
+                  <h2 className="text-3xl font-extrabold mb-2">Host Your Event</h2>
+                  <p className="text-gray-300">Birthdays, corporate events, or private parties.</p>
+                </div>
+              </div>
+              
+              <div className="p-8">
+                {eventStatus === 'success' ? (
+                  <div className="text-center py-12 animate-fade-in space-y-4">
+                    <div className="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto text-4xl mb-6">✓</div>
+                    <h3 className="text-2xl font-bold text-gray-900">Request Received!</h3>
+                    <p className="text-gray-500 max-w-sm mx-auto">Thank you for considering us for your event. Our team will contact you shortly to discuss details.</p>
+                    <button onClick={() => setEventStatus('idle')} className="mt-8 px-6 py-2 text-indigo-600 font-semibold hover:bg-indigo-50 rounded-lg transition-colors">Submit another request</button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleEvent} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Name</label>
+                        <input required type="text" value={eventReq.name} onChange={e => setEventReq({...eventReq, name: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" placeholder="Jane Doe" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Phone</label>
+                        <input required type="tel" value={eventReq.phone} onChange={e => setEventReq({...eventReq, phone: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" placeholder="+91 98765 43210" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Event Date</label>
+                        <input required type="date" value={eventReq.date} onChange={e => setEventReq({...eventReq, date: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Time</label>
+                        <input required type="time" value={eventReq.time} onChange={e => setEventReq({...eventReq, time: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
+                      </div>
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-sm font-semibold text-gray-700">Expected Guests</label>
+                        <input required type="number" min="10" max="500" value={eventReq.guests} onChange={e => setEventReq({...eventReq, guests: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" placeholder="E.g. 50" />
+                      </div>
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-sm font-semibold text-gray-700">Event Description / Special Requests</label>
+                        <textarea rows="4" required value={eventReq.description} onChange={e => setEventReq({...eventReq, description: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all resize-none" placeholder="Please describe the type of event, dietary requirements, or any special arrangements needed..."></textarea>
+                      </div>
+                    </div>
+                    <button type="submit" disabled={eventStatus === 'submitting'} className="w-full py-4 bg-indigo-600 text-white font-bold text-lg rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center">
+                      {eventStatus === 'submitting' ? (
+                        <span className="animate-pulse">Processing...</span>
+                      ) : 'Request Event Booking'}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'Reserve' && (
+          <div className="py-12 px-6 max-w-7xl mx-auto animate-fade-in flex justify-center">
+            <div className="w-full max-w-2xl bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gray-900 text-white p-8 text-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')] bg-cover bg-center"></div>
+                <div className="relative z-10">
+                  <h2 className="text-3xl font-extrabold mb-2">Reserve a Table</h2>
+                  <p className="text-gray-300">Book your perfect dining experience.</p>
+                </div>
+              </div>
+              
+              <div className="p-8">
+                {resStatus === 'success' ? (
+                  <div className="text-center py-12 animate-fade-in space-y-4">
+                    <div className="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto text-4xl mb-6">
+                      ✓
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900">Reservation Request Sent!</h3>
+                    <p className="text-gray-500 max-w-sm mx-auto">Thank you. We have received your request and will contact you shortly to confirm your booking.</p>
+                    <button onClick={() => setResStatus('idle')} className="mt-8 px-6 py-2 text-brand font-semibold hover:bg-brand/5 rounded-lg transition-colors">Make another booking</button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleReserve} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Name</label>
+                        <input required type="text" value={reservation.name} onChange={e => setReservation({...reservation, name: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand/20 focus:border-brand outline-none transition-all" placeholder="John Doe" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Phone</label>
+                        <input required type="tel" value={reservation.phone} onChange={e => setReservation({...reservation, phone: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand/20 focus:border-brand outline-none transition-all" placeholder="+91 98765 43210" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Date</label>
+                        <input required type="date" value={reservation.date} onChange={e => setReservation({...reservation, date: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand/20 focus:border-brand outline-none transition-all" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Time</label>
+                        <input required type="time" value={reservation.time} onChange={e => setReservation({...reservation, time: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand/20 focus:border-brand outline-none transition-all" />
+                      </div>
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-sm font-semibold text-gray-700">Number of Guests</label>
+                        <select required value={reservation.guests} onChange={e => setReservation({...reservation, guests: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand/20 focus:border-brand outline-none transition-all">
+                          {[1,2,3,4,5,6,7,8,'9+'].map(num => <option key={num} value={num}>{num} {num === 1 ? 'Guest' : 'Guests'}</option>)}
+                        </select>
+                      </div>
+                    </div>
+                    <button type="submit" disabled={resStatus === 'submitting'} className="w-full py-4 bg-brand text-white font-bold text-lg rounded-xl hover:bg-[#ff5252] transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center">
+                      {resStatus === 'submitting' ? (
+                        <span className="animate-pulse">Processing...</span>
+                      ) : 'Request Reservation'}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+      </main>
+
+      <footer className="bg-dark text-gray-400 py-12 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 text-center space-y-4">
+          <div className="flex justify-center items-center space-x-2">
+            <div className="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-white font-bold">FF</div>
+            <span className="text-xl font-bold text-white">FlavourFall</span>
+          </div>
+          <p>© 2026 FlavourFall Restaurant Group. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+
+<style>
+  .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</body>
+</html>
