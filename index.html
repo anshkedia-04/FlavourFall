@@ -2546,6 +2546,10 @@ const Sidebar = ({ active, onNavigate, collapsed, onToggle }) => {
 
       {/* Bottom */}
       <div className="p-2 border-t border-gray-800/60 space-y-0.5">
+        <button onClick={() => window.open('customer.html', '_blank')} className={`sidebar-item w-full flex items-center rounded-xl px-3 py-2.5 transition-all text-gray-400 hover:bg-gray-800 hover:text-white ${collapsed ? 'justify-center' : 'space-x-3'}`}>
+          <Icon name="ExternalLink" size={18} />
+          {!collapsed && <span className="text-sm font-medium">Customer Portal</span>}
+        </button>
         {['Owner', 'Manager'].includes(state.activeRole) && (
           <button onClick={() => onNavigate('Settings')} className={`sidebar-item w-full flex items-center rounded-xl px-3 py-2.5 transition-all ${active==='Settings' ? 'bg-white text-zinc-950 font-bold border border-zinc-300' : 'text-gray-400 hover:bg-gray-800 hover:text-white'} ${collapsed ? 'justify-center' : 'space-x-3'}`}>
             <Icon name="Settings" size={18} />
